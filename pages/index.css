@@ -1,0 +1,15 @@
+@import url(../vendor/normalize.css);
+@import url(../vendor/fonts/inter.css);
+
+/* HEADER */
+@import url(../blocks/header/header.css);
+
+/* PROFILE */
+@import url(../blocks/profile/profile.css);
+
+/* ELEMENTS */
+@import url(../blocks/elements/elements.css);
+@import url(../blocks/element/element.css);
+
+/* FOOTER */
+@import url(../blocks/footer/footer.css);

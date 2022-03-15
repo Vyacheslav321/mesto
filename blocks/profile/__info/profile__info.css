@@ -1,0 +1,28 @@
+.profile__info {
+  margin-left: 20px;
+  margin-right: auto;
+  padding: 10px;
+  display: grid;
+  grid-template-columns: auto 24px;
+  grid-template-rows: fit-content 14px;
+  grid-template-areas:
+    "name button"
+    "work work";
+  column-gap: 20px;
+  row-gap: 8px;
+  justify-items: start;
+}
+
+@media screen and (max-width: 845px) {
+  .profile__info {
+    margin: 0 auto;
+    padding: 26px 0 36px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .profile__info {
+    padding: 26px 0 32px;
+    row-gap: 6px;
+  }
+}

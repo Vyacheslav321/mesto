@@ -1,3 +1,20 @@
 .profile {
   margin: 0;
+  padding: 0 0 50px;
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+@media screen and (max-width: 845px) {
+  .profile {
+    flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .profile {
+    padding: 0 0 36px;
+  }
 }

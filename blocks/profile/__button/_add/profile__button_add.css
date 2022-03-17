@@ -2,6 +2,7 @@
   /* padding: calc((50px/2) - 1px) calc((150px/2) - 1px); */
   padding: 23px 73px;
   border: 2px solid #FFF;
+  position: relative;
   /* background-position: center center; */
 }
 .profile__button_add:before {
@@ -27,7 +28,7 @@
           transform: rotate(90deg);
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 845px) {
   .profile__button_add {
     padding: 23px calc((282px - 4px)/2);
   }
@@ -38,5 +39,11 @@
   .profile__button_add:after {
     left: calc(((288px - 2px*2)/2) - (22px/2));
     width: 16px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .profile__button_add {
+    padding: 23px calc((282px - 4px)/2);
   }
 }

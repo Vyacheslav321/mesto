@@ -1,5 +1,7 @@
 .profile__button_edit {
-  grid-area: button;
+  position: absolute;
+  right: 10px;
+  top: 20px;
   align-self: center;
   background-image: url(../../../../images/profile__info_vector.svg);
   background-position: center center;
@@ -7,13 +9,39 @@
   width: 24px;
   height: 24px;
   margin-top: 5px;
-  /* margin-bottom: 2px; */
-  /* padding: 11px 11px; */
   border: 1px solid #FFF;
+}
+
+@media screen and (max-width: 1023px) {
+  .profile__button_edit {
+    right: 8px;
+    top: 16px;
+    margin-top: 0;
+    margin-bottom: 2px;
+  }
+}
+
+@media screen and (max-width: 845px) {
+  .profile__button_edit {
+    right: 8px;
+    top: 38px;
+    width: 18px;
+    height: 18px;
+    margin-top: 0;
+    margin-bottom: 2px;
+  }
+}
+
+@media screen and (max-width: 449px) {
+  .profile__button_edit {
+    right: 0;
+  }
 }
 
 @media screen and (max-width: 320px) {
   .profile__button_edit {
+    right: 18px;
+    top: 32px;
     width: 18px;
     height: 18px;
     margin-top: 0;

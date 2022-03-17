@@ -2,27 +2,33 @@
   margin-left: 20px;
   margin-right: auto;
   padding: 10px;
-  display: grid;
-  grid-template-columns: auto 24px;
-  grid-template-rows: fit-content 14px;
-  grid-template-areas:
-    "name button"
-    "work work";
-  column-gap: 20px;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 332px;
   row-gap: 8px;
   justify-items: start;
+  position: relative;
 }
 
 @media screen and (max-width: 845px) {
   .profile__info {
     margin: 0 auto;
     padding: 26px 0 36px;
+    min-width: 300px;
+  }
+}
+
+@media screen and (max-width: 449px) {
+  .profile__info {
+    min-width: 280px;
   }
 }
 
 @media screen and (max-width: 320px) {
   .profile__info {
-    padding: 26px 0 32px;
+    justify-items: center;
+    align-items: center;
+    padding: 24px 0 32px;
     row-gap: 6px;
   }
 }

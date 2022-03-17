@@ -1,7 +1,6 @@
 .profile__name {
   margin: 0;
   padding: 0;
-  grid-area: name;
   align-items: end;
   font-family: "Inter";
   font-style: normal;
@@ -22,6 +21,9 @@
   .profile__name {
     font-size: 32px;
     line-height: 1.2;
+    text-align: center;
+    max-width: 90vw;
+    min-width: 189px;
   }
 }
 
@@ -29,5 +31,6 @@
   .profile__name {
     font-size: 27px;
     line-height: 1.22;
+    max-width: 189px;
   }
 }

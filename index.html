@@ -8,19 +8,22 @@
     <title>Место</title>
 </head>
 <body class="page">
+<!-- HEADER -->
   <header class="header">
     <div class="header__logo"></div>
   </header>
   <main>
+<!-- PROFILE -->
     <section class="profile">
       <img class="profile__avatar" src="./images/profile__avatar_image.jpg" alt="аватар">
       <div class="profile__info">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
+          <p class="profile__work">Исследователь океана</p>
           <button class="profile__button profile__button_edit"></button>
-        <p class="profile__work">Исследователь океана</p>
       </div>
       <button class="profile__button profile__button_add"></button>
     </section>
+<!-- ELEMENTS -->
     <section class="elements">
       <div class="element">
         <img class="element__pic" src="./images/kirill-pershin-1088404-unsplash.jpg" alt="Карачаевск">
@@ -66,9 +69,20 @@
       </div>
     </section>
   </main>
+<!-- FOOTER -->
   <footer class="footer">
     <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
   </footer>
+<!-- POPUP -->
+  <section class="popup hidden">
+    <form class="popup__form">
+      <button class="popup__close-button"></button>
+      <h3 class="popup__header">Редактировать профиль</h3>
+      <input class="popup__input popup__input_name" type="text" name="name">
+      <input class="popup__input popup__input_work" type="text" name="work">
+      <button class="popup__save-button">Сохранить</button>
+    </form>
+  </section>
 
     <script src="./scripts/script.js"></script>
 </body>

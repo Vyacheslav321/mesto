@@ -2,9 +2,12 @@
   margin: 0;
   padding: 0;
   background-color: #000;
-  color: #FFF;
+  color: #fff;
   font-size: 0;
   box-sizing: border-box;
   cursor: pointer;
+}
+
+.profile__button:hover {
   opacity: 0.6;
 }

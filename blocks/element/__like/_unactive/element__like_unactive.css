@@ -1,3 +1,7 @@
 .element__like_unactive {
   background-image: url(../../../../images/elements__like_unactive.svg);
 }
+
+.element__like_unactive:hover {
+  opacity: 0.5;
+}

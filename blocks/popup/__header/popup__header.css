@@ -1,6 +1,6 @@
 .popup__header {
   margin: 0 auto;
-  padding: 35px 0 48px;
+  padding: 34px 0 39px;
   min-width: 358px;
   align-items: center;
   font-family: "Inter";
@@ -8,5 +8,15 @@
   font-weight: 900;
   font-size: 24px;
   line-height: 1.208;
-  color: #000000;
+  color: #000;
+}
+
+@media screen and (max-width: 567px) {
+  .popup__header {
+    padding: 26px 0 65px;
+    max-width: 238px;
+    min-width: 238px;
+    font-size: 18px;
+    line-height: 22px;
+  }
 }

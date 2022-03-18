@@ -1,7 +1,11 @@
 .profile__work {
+  overflow: hidden;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
   margin: 0;
   padding: 0;
-  min-width: 336px;
+  width: 336px;
   align-items: start;
   font-family: "Inter";
   font-style: normal;

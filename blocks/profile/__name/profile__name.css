@@ -1,7 +1,12 @@
 .profile__name {
+  overflow: hidden;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
   margin: 0;
   padding: 0;
   align-items: end;
+  max-width: 300px;
   font-family: "Inter";
   font-style: normal;
   font-weight: 500;

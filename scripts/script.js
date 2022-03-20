@@ -13,6 +13,8 @@ let popupWork = document.querySelector(".popup__input_work");
 function openPopup() {
   popupElement.classList.toggle("hidden");
   document.addEventListener("keyup", onDocumentKeyUp);
+  popupName.value = profileName.innerHTML;
+  popupWork.value = profileWork.innerHTML;
 }
 function closePopup() {
   popupElement.classList.toggle("hidden");

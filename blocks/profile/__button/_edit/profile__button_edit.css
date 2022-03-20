@@ -1,7 +1,7 @@
 .profile__button_edit {
   position: absolute;
-  right: 10px;
-  top: 20px;
+  right: 0;
+  top: 23px;
   align-self: center;
   background-image: url(../../../../images/profile__info_vector.svg);
   background-position: center center;
@@ -17,34 +17,15 @@
     right: 8px;
     top: 16px;
     margin-top: 0;
-    margin-bottom: 2px;
   }
 }
 
 @media screen and (max-width: 845px) {
   .profile__button_edit {
-    right: 8px;
-    top: 38px;
     width: 18px;
     height: 18px;
-    margin-top: 0;
-    margin-bottom: 2px;
-  }
-}
-
-@media screen and (max-width: 449px) {
-  .profile__button_edit {
-    right: 0;
-  }
-}
-
-@media screen and (max-width: 320px) {
-  .profile__button_edit {
-    right: 18px;
-    top: 32px;
-    width: 18px;
-    height: 18px;
-    margin-top: 0;
-    margin-bottom: 2px;
+    grid-area: edit;
+    position: unset;
+    text-align: center;
   }
 }

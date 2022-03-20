@@ -1,5 +1,5 @@
 .profile__work {
-  overflow: hidden;
+  hyphens: auto;
   -moz-hyphens: auto;
   -webkit-hyphens: auto;
   -ms-hyphens: auto;
@@ -7,17 +7,20 @@
   padding: 0;
   width: 336px;
   align-items: start;
-  font-family: "Inter";
+  font-family: "Inter", Arial, sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
   line-height: 1.22;
   color: #fff;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 @media screen and (max-width: 1023px) {
   .profile__work {
-    min-width: 260px;
+    width: 270px;
   }
 }
 
@@ -26,14 +29,13 @@
     font-size: 16px;
     line-height: 1.21;
     text-align: center;
-    max-width: 90vw;
-    min-width: 282px;
+    max-width: 282px;
+    grid-area: work;
   }
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 767px) {
   .profile__work {
     font-size: 14px;
-    min-width: 282px;
   }
 }

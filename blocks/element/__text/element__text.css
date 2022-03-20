@@ -1,7 +1,7 @@
 .element__text {
   margin: 0;
   padding: 0;
-  font-family: "Inter";
+  font-family: "Inter", Arial, sans-serif;
   font-style: normal;
   font-weight: 900;
   font-size: 24px;
@@ -11,4 +11,5 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  padding-left: 1px; /* Если прямо совсем идеально*/
 }

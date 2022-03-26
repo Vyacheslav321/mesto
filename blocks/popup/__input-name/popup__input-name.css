@@ -1,5 +1,6 @@
-.popup__input {
+.popup__input-name {
   width: 358px;
+  margin: 0 0 21px 0;
   padding: 9px 0;
   box-sizing: border-box;
   border: none;
@@ -13,12 +14,12 @@
   justify-content: center;
 }
 
-.popup__input:focus {
+.popup__input-name:focus {
   outline: none;
 }
 
 @media screen and (max-width: 567px) {
-  .popup__input {
+  .popup__input-name {
     width: 238px;
   }
 }

@@ -1,5 +1,5 @@
 .popup__save-button {
-  margin: 0;
+  margin: 18px 0 37px;
   padding: 0;
   width: 358px;
   height: 50px;
@@ -12,6 +12,7 @@
   line-height: 1.222;
   text-align: center;
   color: #fff;
+  cursor: pointer;
 }
 
 .popup__save-button:hover {
@@ -20,6 +21,8 @@
 
 @media screen and (max-width: 567px) {
   .popup__save-button {
+    margin: 15px 0 25px 0;
+    padding: 0;
     width: 238px;
     height: 46px;
     font-size: 14px;

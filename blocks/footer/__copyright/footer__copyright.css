@@ -8,3 +8,10 @@
   line-height: 1.22;
   color: #545454;
 }
+
+@media screen and (max-width: 845px) {
+  .footer__copyright {
+    font-size: 14px;
+    line-height: 17px;
+  }
+}

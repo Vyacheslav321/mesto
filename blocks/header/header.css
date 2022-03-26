@@ -1,8 +1,7 @@
 .header {
   margin: 45px 0 40px;
   padding: 0;
-  min-height: 74px;
-  border-bottom: 1px solid #545454;
+  border-bottom: 1px solid rgba(54, 54, 54, .7);
   box-sizing: border-box;
   position: relative;
 }
@@ -10,6 +9,5 @@
 @media screen and (max-width: 320px) {
   .header {
     margin-bottom: 42px;
-    min-height: 56px;
   }
 }

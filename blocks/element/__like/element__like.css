@@ -4,5 +4,11 @@
   background-size: contain;
   background-position: center center;
   width: 22px;
-  height: 19px;
+  height: 20px;
+  background-image: url(../../../../images/elements__like_unactive.svg);
+  cursor: pointer;
+}
+
+.element__like:hover {
+  opacity: 0.5;
 }

@@ -7,7 +7,7 @@
   background-position: center center;
   width: 22px;
   height: 20px;
-  background-image: url(../../../../images/elements__like_unactive.svg);
+  background-image: url(../../../images/elements__like_unactive.svg);
   cursor: pointer;
 }
 

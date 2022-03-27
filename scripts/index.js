@@ -6,8 +6,8 @@ const profileForm = document.querySelector(".popup__form");
 
 let profileName = document.querySelector(".profile__name");
 let profileWork = document.querySelector(".profile__work");
-let popupName = document.querySelector(".popup__input-name");
-let popupWork = document.querySelector(".popup__input-work");
+let popupName = document.querySelector(".popup__input_type_name");
+let popupWork = document.querySelector(".popup__input_type_work");
 
 function openPopup() {
   popupName.value = profileName.innerHTML;

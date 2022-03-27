@@ -29,7 +29,7 @@
         <img class="element__pic" src="./images/kirill-pershin-1088404-unsplash.jpg" alt="Карачаевск">
         <div class="element__description">
           <h2 class="element__text">Карачаевск</h2>
-          <button class="element__like element__like_active" type="button" aria-label="Лайк"></button>
+          <button class="element__like" type="button" aria-label="Лайк"></button>
         </div>
       </div>
       <div class="element">
@@ -76,11 +76,11 @@
 <!-- POPUP -->
   <section class="popup">
     <div class="popup__container">
-      <button class="popup__close-button" type="reset" aria-label="Закрыть"></button>
+      <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
       <form class="popup__form" name="edit-bio">
         <h3 class="popup__header">Редактировать профиль</h3>
-        <input class="popup__input-name" type="text" name="popupName" required autofocus>
-        <input class="popup__input-work" type="text" name="popupWork" required>
+        <input class="popup__input popup__input_type_name" type="text" name="popupName" required autofocus>
+        <input class="popup__input popup__input_type_work" type="text" name="popupWork" required>
         <button class="popup__save-button" type="submit" aria-label="Сохранить">Сохранить</button>
       </form>
     </div>

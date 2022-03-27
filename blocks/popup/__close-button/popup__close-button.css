@@ -40,10 +40,12 @@
     right: 36px;
     top: -38px;
   }
+
   .popup__close-button:before {
     border: 1px solid #fff;
     height: 23px;
   }
+
   .popup__close-button:after {
     border: 1px solid #fff;
     height: 23px;

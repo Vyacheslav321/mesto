@@ -6,9 +6,9 @@
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center center;
-  background-color: #fff;
+  background-color: transparent;
   font-size: 0;
-  border: 0;
+  border: none;
   width: 22px;
   height: 20px;
   cursor: pointer;

@@ -27,6 +27,7 @@
     <section class="elements">
       <div class="element">
         <img class="element__pic" src="./images/kirill-pershin-1088404-unsplash.jpg" alt="Карачаевск">
+        <img src="./images/element__trash.svg" alt="Удалить" class="element__trash">
         <div class="element__description">
           <h2 class="element__text">Карачаевск</h2>
           <button class="element__like" type="button" aria-label="Лайк"></button>
@@ -34,6 +35,7 @@
       </div>
       <div class="element">
         <img class="element__pic" src="./images/kirill-pershin-1404681-unsplash.jpg" alt="Гора Эльбрус">
+        <img src="./images/element__trash.svg" alt="Удалить" class="element__trash">
         <div class="element__description">
           <h2 class="element__text">Гора Эльбрус</h2>
           <button class="element__like element__like_active" type="button" aria-label="Лайк"></button>
@@ -41,6 +43,7 @@
       </div>
       <div class="element">
         <img class="element__pic" src="./images/kirill-pershin-1556355-unsplash.jpg" alt="Домбай">
+        <img src="./images/element__trash.svg" alt="Удалить" class="element__trash">
         <div class="element__description">
           <h2 class="element__text">Домбай</h2>
           <button class="element__like element__like_active" type="button" aria-label="Лайк"></button>
@@ -48,6 +51,7 @@
       </div>
       <div class="element">
         <img class="element__pic" src="./images/kirill-pershin-1404681-unsplash.jpg" alt="Гора Эльбрус">
+        <img src="./images/element__trash.svg" alt="Удалить" class="element__trash">
         <div class="element__description">
           <h2 class="element__text">Гора Эльбрус</h2>
           <button class="element__like element__like_active" type="button" aria-label="Лайк"></button>
@@ -55,6 +59,7 @@
       </div>
       <div class="element">
         <img class="element__pic" src="./images/kirill-pershin-1556355-unsplash.jpg" alt="Домбай">
+        <img src="./images/element__trash.svg" alt="Удалить" class="element__trash">
         <div class="element__description">
           <h2 class="element__text">Домбай</h2>
           <button class="element__like element__like_active" type="button" aria-label="Лайк"></button>
@@ -62,6 +67,7 @@
       </div>
       <div class="element">
         <img class="element__pic" src="./images/kirill-pershin-1088404-unsplash.jpg" alt="Карачаево-Черкессия">
+        <img src="./images/element__trash.svg" alt="Удалить" class="element__trash">
         <div class="element__description">
           <h2 class="element__text">Карачаево-Черкессия</h2>
           <button class="element__like element__like_active" type="button" aria-label="Лайк"></button>
@@ -73,7 +79,7 @@
   <footer class="footer">
     <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
   </footer>
-<!-- POPUP -->
+<!-- POPUP name-work-picture-->
   <section class="popup">
     <div class="popup__container">
       <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
@@ -82,6 +88,17 @@
         <input class="popup__input popup__input_type_name" type="text" name="popupName" required autofocus>
         <input class="popup__input popup__input_type_work" type="text" name="popupWork" required>
         <button class="popup__save-button" type="submit" aria-label="Сохранить">Сохранить</button>
+      </form>
+    </div>
+    </section>
+    <section class="popup">
+    <div class="popup__container">
+      <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
+      <form class="popup__form" name="edit-pic">
+        <h3 class="popup__header">Новое место</h3>
+        <input class="popup__input popup__input_type_picname" type="text" name="picName" placeholder="Название" required autofocus>
+        <input class="popup__input popup__input_type_picurl" type="text" name="picURL"  placeholder="Ссылка на картинку"required>
+        <button class="popup__save-button" type="submit" aria-label="Сохранить">Создать</button>
       </form>
     </div>
   </section>

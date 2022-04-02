@@ -1,0 +1,11 @@
+.element__trash {
+  margin: 0;
+  padding: 0;
+  width: 18px;
+  height: 19px;
+  background-color: transparent;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 11;
+}

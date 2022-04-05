@@ -111,11 +111,14 @@ profileForm[1].addEventListener("submit", closeAndSavePic);
 //функция открытия попапа добавления фото
 function openPopupPic() {
   popupElementPic.classList.add("popup_opened");
+  document.addEventListener("keyup", onDocumentKeyUp);
 }
 //функция закрытия попапа добавления фото
 function closePopupPic() {
   popupElementPic.classList.remove("popup_opened");
+  document.removeEventListener("keyup", onDocumentKeyUp);
 }
+
 //функция добавления новой карточки
 function closeAndSavePic(evt) {
   //сброс стандартной обработки события
@@ -142,10 +145,12 @@ function openPopup() {
   popupName.value = profileName.innerHTML;
   popupWork.value = profileWork.innerHTML;
   popupElementEdit.classList.add("popup_opened");
+  document.addEventListener("keyup", onDocumentKeyUp);
 }
 //функция закрытия попапа
 function closePopup() {
   popupElementEdit.classList.remove("popup_opened");
+  document.removeEventListener("keyup", onDocumentKeyUp);
 }
 //функция закрытия и сохранения попапа и данных
 function closeAndSave() {
@@ -154,3 +159,4 @@ function closeAndSave() {
   profileWork.textContent = popupWork.value;
   closePopup();
 }
+

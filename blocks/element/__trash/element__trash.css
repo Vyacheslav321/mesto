@@ -13,3 +13,8 @@
   right: 20px;
   cursor: pointer;
 }
+
+.element__trash:hover {
+  opacity: 0.6;
+}
+

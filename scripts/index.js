@@ -118,7 +118,13 @@ function closePopupPic() {
   popupElementPic.classList.remove("popup_opened");
   document.removeEventListener("keyup", onDocumentKeyUp);
 }
-
+//отправка по enter
+function onDocumentKeyUp(event) {
+  if (event.key === "Enter") {
+    const activePopup = document.querySelector('.popup_opened');
+    closePopup(activePopup);
+  }
+}
 //функция добавления новой карточки
 function closeAndSavePic(evt) {
   //сброс стандартной обработки события
@@ -159,4 +165,3 @@ function closeAndSave() {
   profileWork.textContent = popupWork.value;
   closePopup();
 }
-

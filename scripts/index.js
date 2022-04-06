@@ -4,68 +4,33 @@
 const cardTemplate = document.querySelector("#card-template").content;
 const elements = document.querySelector(".elements");
 //обьявляю попапы
-const popupElement = document.querySelectorAll(".popup");
-const popupElementEdit = popupElement[0];
-const popupElementPic = popupElement[1];
-const popupPicture = popupElement[2];
+const popupElementEditBio = document.querySelector(".popup_type_edit-bio");
+const popupElementEditPic = document.querySelector(".popup_type_edit-pic");
+const popupBigPicture = document.querySelector(".popup_type_bigpicture");
 //обьявляю батоны открытия
 const profileEdit = document.querySelector(".profile__button-edit");
 const photoAdd = document.querySelector(".profile__button-add");
 //обьявляю батоны закрытия
-const profileEditClose = document.querySelectorAll(".popup__close-button");
-const closeEdit = profileEditClose[0];
-const closePic = profileEditClose[1];
-const closePicture = profileEditClose[2];
+const closeEdit = document.querySelector(".popup__close-button_type_edit-bio");
+const closePic = document.querySelector(".popup__close-button_type_edit-pic");
+const closePicture = document.querySelector(".popup__close-button_type_picture");
 //обьявляю кнопки закрытия и сохранения форм
-const profileForm = document.querySelectorAll(".popup__form");
+const closeSaveName = popupElementEditBio.querySelector(".popup__form");
+const closeSavePic = popupElementEditPic.querySelector(".popup__form");
 //поля вывода просмотра фото
-const pictureImg = document.querySelector(".popup__picture");
-const pictureText = document.querySelector(".popup__text");
+const pictureImg = popupBigPicture.querySelector(".popup__picture");
+const pictureText = popupBigPicture.querySelector(".popup__text");
 //поля вывода имени/работы
-let profileName = document.querySelector(".profile__name");
-let profileWork = document.querySelector(".profile__work");
+const profileName = document.querySelector(".profile__name");
+const profileWork = document.querySelector(".profile__work");
 //поля карточки изменения имени/работы
-let popupName = document.querySelector(".popup__input_type_name");
-let popupWork = document.querySelector(".popup__input_type_work");
+const popupName = popupElementEditBio.querySelector(".popup__input_type_name");
+const popupWork = popupElementEditBio.querySelector(".popup__input_type_work");
 //поля карточки добавления фото
-let popupPicName = document.querySelector(".popup__input_type_picname");
-let popupPicUrl = document.querySelector(".popup__input_type_picurl");
+const popupPicName = popupElementEditPic.querySelector(".popup__input_type_picname");
+const popupPicUrl = popupElementEditPic.querySelector(".popup__input_type_picurl");
 
-// Рисую в DOM карточки с фотографиями
-//
-//массив карточек по умолчанию
-const initialCards = [
-  {
-    name: "Архыз",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
-  },
-  {
-    name: "Челябинская область",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-  },
-  {
-    name: "Иваново",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-  },
-  {
-    name: "Камчатка",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-  },
-  {
-    name: "Холмогорский район",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-  },
-  {
-    name: "Байкал",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-  },
-];
 
-//генерирую страницу из массива по умолчанию
-initialCards.forEach((item) => {
-  const newCard = createCards(item.name, item.link);
-  elements.append(newCard);
-});
 
 //функция генерации карточки и прослушки событий
 function createCards(picName, picUrl) {
@@ -77,16 +42,12 @@ function createCards(picName, picUrl) {
   cardItemImage.alt = picName;
   cardElement.querySelector(".element__text").textContent = picName;
   //слушаю клик на открытие карточки фото
-  //передаю данные о фото в попап фото и открываю его
   cardItemImage.addEventListener("click", () => {
+  //передаю данные о фото в попап фото и открываю его
     pictureImg.src = picUrl;
     pictureImg.alt = picName;
     pictureText.textContent = picName;
-    popupPicture.classList.add("popup_opened");
-  });
-  //слушаю клик на закрытие карточки фото и обрабатываю его
-  closePicture.addEventListener("click", () => {
-    popupPicture.classList.remove("popup_opened");
+    popupBigPicture.classList.add("popup_opened");
   });
   //слушаю клик на лайк и обрабатываю его
   const addLike = cardElement.querySelector(".element__like");
@@ -100,32 +61,61 @@ function createCards(picName, picUrl) {
   });
   //возвращаю результат
   return cardElement;
+};
+
+// Рисую в DOM карточки с фотографиями
+//генерирую страницу из массива по умолчанию
+initialCards.forEach((item) => {
+  // const newCard = createCards(item.name, item.link);
+  const newCard = createCards(item.name, item.link);
+  elements.append(newCard);
+});
+
+//выход по ESC
+// function onDocumentKeyUp(event) {
+//   if (event.key === "ESC") {
+//     const activePopup = document.querySelector('.popup_opened');
+//     closePopup(activePopup);
+//   };
+// };
+
+//функция открытия попапа
+function openPopup(popup) {
+  popup.classList.add("popup_opened");
+  // document.addEventListener("keyup", onDocumentKeyUp);
+};
+//функция закрытия попапа
+function closePopup(popup) {
+  popup.classList.remove("popup_opened");
+  // document.removeEventListener("keyup", onDocumentKeyUp);
+};
+//функция закрыти просмотра фото
+function closeBigPicture() {
+  popupBigPicture.classList.remove("popup_opened");
+};
+
+
+//функция открытия попапа Name
+function openPopupName() {
+  //получаю значения полей попапа со страницы
+  popupName.value = profileName.innerHTML;
+  popupWork.value = profileWork.innerHTML;
+  //открываю попап
+  openPopup(popupElementEditBio);
 }
 
-//попап pic - добавляю фото
-//
-//слушаю клики по кнопкам открыть закрыть и сохранить
-photoAdd.addEventListener("click", openPopupPic);
-closePic.addEventListener("click", closePopupPic);
-profileForm[1].addEventListener("submit", closeAndSavePic);
-//функция открытия попапа добавления фото
-function openPopupPic() {
-  popupElementPic.classList.add("popup_opened");
-  document.addEventListener("keyup", onDocumentKeyUp);
-}
-//функция закрытия попапа добавления фото
-function closePopupPic() {
-  popupElementPic.classList.remove("popup_opened");
-  document.removeEventListener("keyup", onDocumentKeyUp);
-}
-//отправка по enter
-function onDocumentKeyUp(event) {
-  if (event.key === "Enter") {
-    const activePopup = document.querySelector('.popup_opened');
-    closePopup(activePopup);
-  }
-}
-//функция добавления новой карточки
+//функция закрытия и сохранения попапа Name
+function closeAndSaveName() {
+  //сброс стандартной обработки события
+  event.preventDefault();
+  //пердаю значения полей попапа на страницу
+  profileName.textContent = popupName.value;
+  profileWork.textContent = popupWork.value;
+  //закрываю попап
+  closePopup(popupElementEditBio);
+};
+
+//функция закрытия и сохранения попапа Pic
 function closeAndSavePic(evt) {
   //сброс стандартной обработки события
   evt.preventDefault();
@@ -136,32 +126,18 @@ function closeAndSavePic(evt) {
   //обнуляю значения
   pictureText.value = "";
   pictureImg.value = "";
-  //закрываю попап с добавлением фото
-  closePopupPic();
-}
+  //закрываю попап
+  closePopup(popupElementEditPic);
+};
 
-//попап name - меняю имя и должность
-//
-//слушаю клики на открытие закрытие и сохранение
-profileEdit.addEventListener("click", openPopup);
-closeEdit.addEventListener("click", closePopup);
-profileForm[0].addEventListener("submit", closeAndSave);
-//функция открытия попапа
-function openPopup() {
-  popupName.value = profileName.innerHTML;
-  popupWork.value = profileWork.innerHTML;
-  popupElementEdit.classList.add("popup_opened");
-  document.addEventListener("keyup", onDocumentKeyUp);
-}
-//функция закрытия попапа
-function closePopup() {
-  popupElementEdit.classList.remove("popup_opened");
-  document.removeEventListener("keyup", onDocumentKeyUp);
-}
-//функция закрытия и сохранения попапа и данных
-function closeAndSave() {
-  event.preventDefault();
-  profileName.textContent = popupName.value;
-  profileWork.textContent = popupWork.value;
-  closePopup();
-}
+
+//слушаю клики по кнопкам открыть окно
+profileEdit.addEventListener("click", openPopupName);
+photoAdd.addEventListener("click", () => {openPopup(popupElementEditPic)});
+//слушаю клики по кнопкам закрыть окно
+closeEdit.addEventListener("click", () => {closePopup(popupElementEditBio)});
+closePic.addEventListener("click", () => {closePopup(popupElementEditPic)});
+closePicture.addEventListener("click", closeBigPicture);
+//слушаю клики на закрытие и сохранение
+closeSaveName.addEventListener("submit", closeAndSaveName);
+closeSavePic.addEventListener("submit", closeAndSavePic);

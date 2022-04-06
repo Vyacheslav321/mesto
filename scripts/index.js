@@ -63,12 +63,15 @@ function createCards(picName, picUrl) {
   return cardElement;
 };
 
+function prependCard(element, Card) {
+element.prepend(Card);
+}
+
 // Рисую в DOM карточки с фотографиями
 //генерирую страницу из массива по умолчанию
 initialCards.forEach((item) => {
-  // const newCard = createCards(item.name, item.link);
   const newCard = createCards(item.name, item.link);
-  elements.append(newCard);
+  prependCard(elements, newCard);
 });
 
 //выход по ESC
@@ -89,25 +92,20 @@ function closePopup(popup) {
   popup.classList.remove("popup_opened");
   // document.removeEventListener("keyup", onDocumentKeyUp);
 };
-//функция закрыти просмотра фото
-function closeBigPicture() {
-  popupBigPicture.classList.remove("popup_opened");
-};
-
 
 //функция открытия попапа Name
 function openPopupName() {
   //получаю значения полей попапа со страницы
-  popupName.value = profileName.innerHTML;
-  popupWork.value = profileWork.innerHTML;
+  popupName.value = profileName.textContent;
+  popupWork.value = profileWork.textContent;
   //открываю попап
   openPopup(popupElementEditBio);
 }
 
 //функция закрытия и сохранения попапа Name
-function closeAndSaveName() {
+function handleName(evt) {
   //сброс стандартной обработки события
-  event.preventDefault();
+  evt.preventDefault();
   //пердаю значения полей попапа на страницу
   profileName.textContent = popupName.value;
   profileWork.textContent = popupWork.value;
@@ -116,13 +114,13 @@ function closeAndSaveName() {
 };
 
 //функция закрытия и сохранения попапа Pic
-function closeAndSavePic(evt) {
+function handlePic(evt) {
   //сброс стандартной обработки события
   evt.preventDefault();
   //генерация новой карточки с прослушкой событий
   const newCard = createCards(popupPicName.value, popupPicUrl.value);
   //добавляю карточку в ДОМ
-  elements.prepend(newCard);
+  prependCard(elements, newCard);
   //обнуляю значения
   pictureText.value = "";
   pictureImg.value = "";
@@ -137,7 +135,7 @@ photoAdd.addEventListener("click", () => {openPopup(popupElementEditPic)});
 //слушаю клики по кнопкам закрыть окно
 closeEdit.addEventListener("click", () => {closePopup(popupElementEditBio)});
 closePic.addEventListener("click", () => {closePopup(popupElementEditPic)});
-closePicture.addEventListener("click", closeBigPicture);
+closePicture.addEventListener("click", () => {closePopup(popupBigPicture);});
 //слушаю клики на закрытие и сохранение
-closeSaveName.addEventListener("submit", closeAndSaveName);
-closeSavePic.addEventListener("submit", closeAndSavePic);
+closeSaveName.addEventListener("submit", handleName);
+closeSavePic.addEventListener("submit", handlePic);

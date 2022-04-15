@@ -1,12 +1,38 @@
+;
 // Переменные и постоянные
 //
 //темплейт карточек
 const cardTemplate = document.querySelector("#card-template").content;
 const elements = document.querySelector(".elements");
-//обьявляю попапы
+
+////обьявляю попап name
 const popupElementEditBio = document.querySelector(".popup_type_edit-bio");
+//поля карточки изменения имени/работы
+const popupName = popupElementEditBio.querySelector(".popup__input_type_name");
+const popupWork = popupElementEditBio.querySelector(".popup__input_type_work");
+//обьявляю кнопки закрытия и сохранения формы
+const formSaveName = popupElementEditBio.querySelector(".popup__form");
+//поля вывода имени/работы
+const profileName = document.querySelector(".profile__name");
+const profileWork = document.querySelector(".profile__work");
+
+
+////обьявляю попап pic
 const popupElementEditPic = document.querySelector(".popup_type_edit-pic");
+//поля карточки добавления фото
+const popupPicName = popupElementEditPic.querySelector(".popup__input_type_picname");
+const popupPicUrl = popupElementEditPic.querySelector(".popup__input_type_picurl");
+//обьявляю кнопки закрытия и сохранения формы
+const formSavePic = popupElementEditPic.querySelector(".popup__form");
+
+
+////обьявляю попап фото
 const popupBigPicture = document.querySelector(".popup_type_bigpicture");
+//поля вывода просмотра фото
+const pictureImg = popupBigPicture.querySelector(".popup__picture");
+const pictureText = popupBigPicture.querySelector(".popup__text");
+
+
 //обьявляю батоны открытия
 const profileEdit = document.querySelector(".profile__button-edit");
 const photoAdd = document.querySelector(".profile__button-add");
@@ -14,21 +40,6 @@ const photoAdd = document.querySelector(".profile__button-add");
 const closeEdit = document.querySelector(".popup__close-button_type_edit-bio");
 const closePic = document.querySelector(".popup__close-button_type_edit-pic");
 const closePicture = document.querySelector(".popup__close-button_type_picture");
-//обьявляю кнопки закрытия и сохранения форм
-const closeSaveName = popupElementEditBio.querySelector(".popup__form");
-const closeSavePic = popupElementEditPic.querySelector(".popup__form");
-//поля вывода просмотра фото
-const pictureImg = popupBigPicture.querySelector(".popup__picture");
-const pictureText = popupBigPicture.querySelector(".popup__text");
-//поля вывода имени/работы
-const profileName = document.querySelector(".profile__name");
-const profileWork = document.querySelector(".profile__work");
-//поля карточки изменения имени/работы
-const popupName = popupElementEditBio.querySelector(".popup__input_type_name");
-const popupWork = popupElementEditBio.querySelector(".popup__input_type_work");
-//поля карточки добавления фото
-const popupPicName = popupElementEditPic.querySelector(".popup__input_type_picname");
-const popupPicUrl = popupElementEditPic.querySelector(".popup__input_type_picurl");
 
 
 
@@ -74,23 +85,23 @@ initialCards.forEach((item) => {
   prependCard(elements, newCard);
 });
 
-//выход по ESC
-// function onDocumentKeyUp(event) {
-//   if (event.key === "ESC") {
-//     const activePopup = document.querySelector('.popup_opened');
-//     closePopup(activePopup);
-//   };
-// };
+// выход по ESC
+function onDocumentKeyUp(event) {
+  if (event.key === "Escape") {
+    const activePopup = document.querySelector('.popup_opened');
+    closePopup(activePopup);
+  };
+};
 
 //функция открытия попапа
 function openPopup(popup) {
   popup.classList.add("popup_opened");
-  // document.addEventListener("keyup", onDocumentKeyUp);
+  document.addEventListener("keyup", onDocumentKeyUp);
 };
 //функция закрытия попапа
 function closePopup(popup) {
   popup.classList.remove("popup_opened");
-  // document.removeEventListener("keyup", onDocumentKeyUp);
+  document.removeEventListener("keyup", onDocumentKeyUp);
 };
 
 //функция открытия попапа Name
@@ -106,26 +117,40 @@ function openPopupName() {
 function handleName(evt) {
   //сброс стандартной обработки события
   evt.preventDefault();
-  //пердаю значения полей попапа на страницу
-  profileName.textContent = popupName.value;
-  profileWork.textContent = popupWork.value;
-  //закрываю попап
-  closePopup(popupElementEditBio);
+  //выбираю текущую форму
+  const currentForm = evt.target;
+  //проверяю, что форма валидка
+  if (currentForm.checkValidity) {
+    //пердаю значения полей попапа на страницу
+    profileName.textContent = popupName.value;
+    profileWork.textContent = popupWork.value;
+    //закрываю попап
+    closePopup(popupElementEditBio);
+    //сбрасываю форму
+    currentForm.reset();
+    }
 };
 
 //функция закрытия и сохранения попапа Pic
 function handlePic(evt) {
   //сброс стандартной обработки события
   evt.preventDefault();
-  //генерация новой карточки с прослушкой событий
-  const newCard = createCards(popupPicName.value, popupPicUrl.value);
-  //добавляю карточку в ДОМ
-  prependCard(elements, newCard);
-  //обнуляю значения
-  pictureText.value = "";
-  pictureImg.value = "";
-  //закрываю попап
-  closePopup(popupElementEditPic);
+  //выбираю текущую форму
+  const currentForm = evt.target;
+  //проверяю, что форма валидка
+  if (currentForm.checkValidity) {
+    //генерация новой карточки с прослушкой событий
+    const newCard = createCards(popupPicName.value, popupPicUrl.value);
+    //добавляю карточку в ДОМ
+    prependCard(elements, newCard);
+    //обнуляю значения
+    pictureText.value = "";
+    pictureImg.value = "";
+    //закрываю попап
+    closePopup(popupElementEditPic);
+    //сбрасываю форму
+    currentForm.reset();
+  }
 };
 
 
@@ -137,5 +162,5 @@ closeEdit.addEventListener("click", () => {closePopup(popupElementEditBio)});
 closePic.addEventListener("click", () => {closePopup(popupElementEditPic)});
 closePicture.addEventListener("click", () => {closePopup(popupBigPicture);});
 //слушаю клики на закрытие и сохранение
-closeSaveName.addEventListener("submit", handleName);
-closeSavePic.addEventListener("submit", handlePic);
+formSaveName.addEventListener("submit", handleName);
+formSavePic.addEventListener("submit", handlePic);

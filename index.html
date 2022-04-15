@@ -34,10 +34,12 @@
   <section class="popup popup_type_edit-bio">
     <div class="popup__container popup__container_type_input">
       <button class="popup__close-button popup__close-button_type_edit-bio" type="button" aria-label="Закрыть"></button>
-      <form class="popup__form" name="edit-bio">
+      <form class="popup__form" name="edit-bio" novalidate>
         <h3 class="popup__header">Редактировать профиль</h3>
-        <input class="popup__input popup__input_type_name" type="text" name="popupName" required autofocus>
-        <input class="popup__input popup__input_type_work" type="text" name="popupWork" required>
+        <input class="popup__input popup__input_type_name" type="text" name="popupName" minlength="2" maxlength="40" required autofocus>
+        <span id="popupName-error" class="error"></span>
+        <input class="popup__input popup__input_type_work" type="text" name="popupWork" minlength="2" maxlength="200" required>
+        <span id="popupWork-error" class="error"></span>
         <button class="popup__save-button" type="submit" aria-label="Сохранить">Сохранить</button>
       </form>
     </div>
@@ -46,10 +48,12 @@
     <section class="popup popup_type_edit-pic">
     <div class="popup__container popup__container_type_input">
       <button class="popup__close-button popup__close-button_type_edit-pic" type="button" aria-label="Закрыть"></button>
-      <form class="popup__form" name="edit-pic">
+      <form class="popup__form" name="edit-pic" novalidate>
         <h3 class="popup__header">Новое место</h3>
-        <input class="popup__input popup__input_type_picname" type="text" name="picName" placeholder="Название" required autofocus>
+        <input class="popup__input popup__input_type_picname" type="text" name="picName" placeholder="Название" minlength="2" maxlength="30" required autofocus>
+        <span id="picName-error" class="error"></span>
         <input class="popup__input popup__input_type_picurl" type="url" name="picURL"  placeholder="Ссылка на картинку" required>
+        <span id="picURL-error" class="error"></span>
         <button class="popup__save-button" type="submit" aria-label="Сохранить">Создать</button>
       </form>
     </div>
@@ -75,5 +79,6 @@
   </template>
   <script src="./scripts/cards.js"></script>
   <script src="./scripts/index.js"></script>
+  <script src="./scripts/validate.js"></script>
 </body>
 </html>

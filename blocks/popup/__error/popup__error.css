@@ -1,4 +1,4 @@
 /* подчеркивание красным для некорректных данных */
-.popup__error {
+.popup__error:invalid {
   border-bottom: 1px solid #ff0000;
 }

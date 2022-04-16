@@ -8,6 +8,7 @@ const inactiveButtonClass = 'popup__save-button_invalid'; //+++класс кот
 
 const errorClass = 'popup__error';
 const popupOpenedClass = 'popup_opened'//
+
 //
 //темплейт карточек
 const cardTemplate = document.querySelector("#card-template").content;
@@ -169,7 +170,7 @@ function handlePic(evt) {
   }
 };
 
-enableValidation (formSelector, submitButtonSelector, inactiveButtonClass, errorClass);
+enableValidation (submitButtonSelector, inactiveButtonClass, errorClass);
 
 //слушаю клики по кнопкам открыть окно
 profileEdit.addEventListener("click", openPopupName);

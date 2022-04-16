@@ -1,11 +1,13 @@
 ;
 // Переменные и постоянные
+
 const formSelector = '.popup__form' // ++класс для в закрытии попапа
 
 const submitButtonSelector = '.popup__save-button'; //+++класс кнопки
 const inactiveButtonClass = 'popup__save-button_invalid'; //+++класс которым делаю кнопку неактивной
 
-const errorClass = 'popup__error'; //
+const errorClass = 'popup__error';
+const popupOpenedClass = 'popup_opened'//
 //
 //темплейт карточек
 const cardTemplate = document.querySelector("#card-template").content;
@@ -64,7 +66,7 @@ function createCards(picName, picUrl) {
     pictureImg.src = picUrl;
     pictureImg.alt = picName;
     pictureText.textContent = picName;
-    popupBigPicture.classList.add("popup_opened");
+    popupBigPicture.classList.add(popupOpenedClass);
   });
   //слушаю клик на лайк и обрабатываю его
   const addLike = cardElement.querySelector(".element__like");
@@ -101,12 +103,12 @@ function onDocumentKeyUp(event) {
 
 //функция открытия попапа
 function openPopup(popup) {
-  popup.classList.add("popup_opened");
+  popup.classList.add(popupOpenedClass);
   document.addEventListener("keyup", onDocumentKeyUp);
 };
 //функция закрытия попапа
 function closePopup(popup) {
-  popup.classList.remove("popup_opened");
+  popup.classList.remove(popupOpenedClass);
   document.removeEventListener("keyup", onDocumentKeyUp);
 };
 //функция закрытия попапа кликом по оверлею

@@ -1,25 +1,33 @@
 ;
 // включение валидации вызовом enableValidation
 // все настройки передаются при вызове
+// const formSelector = '.popup__form'; //++класс формы
+const inputSelector = '.popup__input'; //класс инпута
+// const submitButtonSelector = '.popup__save-button'; //+++класс кнопки
+// const inactiveButtonClass = 'popup__save-button_invalid'; //+++класс кнопки которым делаю кнопку неактивной
+const inputErrorClass = 'popup__input_type_error'; //
+// const errorClass = 'popup__error'; //
 
-// enableValidation({
-//   formSelector: '.popup__form', //класс формы
-//   inputSelector: '.popup__input', //класс инпута
-//   submitButtonSelector: '.popup__button', //класс кнопки
-//   inactiveButtonClass: 'popup__button_disabled', //класс кнопки которым делаю кнопку неактивной
-//   inputErrorClass: 'popup__input_type_error',
-//   errorClass: 'popup__error_visible'
-// });
+
+const enableValidation = (formSelector, submitButtonSelector, inactiveButtonClass, errorClass) => {
 
 //вывожу ошибку в спан
-const valideteInput = (input) => {
+const valideteInput = (input, isValid) => {
   //выбираю нужный спан
   const errorElement = input.parentNode.querySelector(`#${input.name}-error`);
   //достаю значение ощибки из Validation API
-  errorElement.textContent = input.validationMessage
+  errorElement.textContent = input.validationMessage;
+  //если есть ошибка, вывожу подчеркивание
+  if (!isValid) {
+    console.log(input);
+    input.classList.add(errorClass);
+  } else {
+    console.log(input);
+    input.classList.remove(errorClass);
+  };
 }
 
-//кнопк активна
+//кнопка активна
 const enableButton = (button, inactiveButtonClass) => {
   button.disabled = false;
   button.classList.remove(inactiveButtonClass);
@@ -33,9 +41,9 @@ const disableButton = (button, inactiveButtonClass) => {
 //в зависимости от наличия ошибок в полях ввода
 const setButtonState = (button, isValid) => {
   if (isValid) {
-    enableButton(button, "popup__save-button_invalid");//убрать 'popup__save-button_invalid' в константу
+    enableButton(button, inactiveButtonClass);//убрал 'popup__save-button_invalid' в константу
   } else {
-    disableButton(button, "popup__save-button_invalid");//убрать 'popup__save-button_invalid' в константу
+    disableButton(button, inactiveButtonClass);//убрал 'popup__save-button_invalid' в константу
   };
 };
 
@@ -43,14 +51,18 @@ const setButtonState = (button, isValid) => {
 const handleInput = (event) => {
   const currentForm = event.currentTarget;
   const input = event.target;
-  const submitButton = currentForm.querySelector('.popup__save-button');
+  console.log(event.target)
+  const submitButton = currentForm.querySelector(submitButtonSelector); //убрал '.popup__save-button' в переменную
   //проверка инпута
-  valideteInput(input);
+  valideteInput(input, currentForm.checkValidity());
   //ативность кнопки
   setButtonState(submitButton, currentForm.checkValidity());
+
 }
 
 
 
 formSaveName.addEventListener("input", handleInput);
 formSavePic.addEventListener("input", handleInput);
+};
+

@@ -1,5 +1,11 @@
 ;
 // Переменные и постоянные
+const formSelector = '.popup__form' // ++класс для в закрытии попапа
+
+const submitButtonSelector = '.popup__save-button'; //+++класс кнопки
+const inactiveButtonClass = 'popup__save-button_invalid'; //+++класс которым делаю кнопку неактивной
+
+const errorClass = 'popup__error'; //
 //
 //темплейт карточек
 const cardTemplate = document.querySelector("#card-template").content;
@@ -103,6 +109,14 @@ function closePopup(popup) {
   popup.classList.remove("popup_opened");
   document.removeEventListener("keyup", onDocumentKeyUp);
 };
+//функция закрытия попапа кликом по оверлею
+function ovrlayClose (evt, popup) {
+  // если клик был выполнен за пределами popup__form
+  // закрываем его
+  if (!evt.target.closest(formSelector)) {
+    closePopup(popup);
+    }
+  }
 
 //функция открытия попапа Name
 function openPopupName() {
@@ -153,14 +167,20 @@ function handlePic(evt) {
   }
 };
 
+enableValidation (formSelector, submitButtonSelector, inactiveButtonClass, errorClass);
 
 //слушаю клики по кнопкам открыть окно
 profileEdit.addEventListener("click", openPopupName);
 photoAdd.addEventListener("click", () => {openPopup(popupElementEditPic)});
-//слушаю клики по кнопкам закрыть окно
+// //слушаю клики по кнопкам закрыть окно
 closeEdit.addEventListener("click", () => {closePopup(popupElementEditBio)});
 closePic.addEventListener("click", () => {closePopup(popupElementEditPic)});
 closePicture.addEventListener("click", () => {closePopup(popupBigPicture);});
+//слушаю клики по оверлею
+popupElementEditBio.addEventListener("click", (evt) => {ovrlayClose (evt, popupElementEditBio)});
+popupElementEditPic.addEventListener("click", (evt) => {ovrlayClose (evt, popupElementEditPic)});
+popupBigPicture.addEventListener("click", (evt) => {ovrlayClose (evt, popupBigPicture);});
+
 //слушаю клики на закрытие и сохранение
 formSaveName.addEventListener("submit", handleName);
 formSavePic.addEventListener("submit", handlePic);

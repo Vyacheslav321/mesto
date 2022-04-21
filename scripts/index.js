@@ -1,5 +1,5 @@
 // Переменные и постоянные
-const popupOpenedClass = "popup_opened"; //
+const popupOpenedClass = "popup_opened";
 const settings = {
   formSelector: ".popup__form",
   inputSelector: ".popup__input",
@@ -15,6 +15,7 @@ const elements = document.querySelector(".elements");
 
 //объявляю все попапы
 const popups = document.querySelectorAll('.popup');
+
 ////обьявляю попап name
 const popupElementEditBio = document.querySelector(".popup_type_edit-bio");
 //поля карточки изменения имени/работы
@@ -37,7 +38,7 @@ const popupPicUrl = popupElementEditPic.querySelector(
 );
 //обьявляю кнопки закрытия и сохранения формы
 const formSavePic = popupElementEditPic.querySelector(".popup__form");
-const saveButtonPic = popupElementEditPic.querySelector('.popup__save-button')
+const saveButtonPic = popupElementEditPic.querySelector(settings.submitButtonSelector)
 
 ////обьявляю попап фото
 const popupBigPicture = document.querySelector(".popup_type_bigpicture");

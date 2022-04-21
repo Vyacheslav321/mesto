@@ -1,18 +1,20 @@
 // Переменные и постоянные
-
-const formSelector = ".popup__form"; // ++класс для в закрытии попапа
-
-const submitButtonSelector = ".popup__save-button"; //+++класс кнопки
-const inactiveButtonClass = "popup__save-button_invalid"; //+++класс которым делаю кнопку неактивной
-
-const errorClass = "popup__error";
 const popupOpenedClass = "popup_opened"; //
+const settings = {
+  formSelector: ".popup__form",
+  inputSelector: ".popup__input",
+  submitButtonSelector: ".popup__save-button",
+  inactiveButtonClass: "popup__save-button_disabled",
+  inputErrorClass: "popup__input_type_error",
+  errorClass: "popup__error_visible"};
 
 //
 //темплейт карточек
 const cardTemplate = document.querySelector("#card-template").content;
 const elements = document.querySelector(".elements");
 
+//объявляю все попапы
+const popups = document.querySelectorAll('.popup');
 ////обьявляю попап name
 const popupElementEditBio = document.querySelector(".popup_type_edit-bio");
 //поля карточки изменения имени/работы
@@ -65,7 +67,7 @@ function createCards(picName, picUrl) {
     pictureImg.src = picUrl;
     pictureImg.alt = picName;
     pictureText.textContent = picName;
-    popupBigPicture.classList.add(popupOpenedClass);
+    openPopup(popupBigPicture);
   });
   //слушаю клик на лайк и обрабатываю его
   const addLike = cardElement.querySelector(".element__like");
@@ -93,7 +95,7 @@ initialCards.forEach((item) => {
 });
 
 // выход по ESC
-function onDocumentKeyUp(event) {
+function handleEscape(event) {
   if (event.key === "Escape") {
     const activePopup = document.querySelector(".popup_opened");
     closePopup(activePopup);
@@ -102,25 +104,39 @@ function onDocumentKeyUp(event) {
 
 //функция открытия попапа
 function openPopup(popup) {
+  enableValidation(settings);
   popup.classList.add(popupOpenedClass);
-  document.addEventListener("keyup", onDocumentKeyUp);
+  document.addEventListener("keyup", handleEscape);
 }
+
 //функция закрытия попапа
 function closePopup(popup) {
   popup.classList.remove(popupOpenedClass);
-  document.removeEventListener("keyup", onDocumentKeyUp);
-}
-//функция закрытия попапа кликом по оверлею
-function ovrlayClose(evt, popup) {
-  // если клик был выполнен за пределами popup__form
-  // закрываем его
-  if (!evt.target.closest(formSelector)) {
-    closePopup(popup);
-  }
+  document.removeEventListener("keyup", handleEscape);
 }
 
+//функция закрытия попапа по нажатию на оверлей и крестик
+//прохожу по всем найденным попапам
+popups.forEach((popup) => {
+  //вешаю прослушивание нажатия мыши на эти попапы
+  popup.addEventListener('mousedown', (evt) => {
+    //если элемент, на котором произошло событие
+    //содержит класс popup_opened (пространство вне контейнера попапа)
+    if (evt.target.classList.contains('popup_opened')) {
+      //закрываю попап
+      closePopup(popup);
+    }
+    //или содержит класс popup__close-button (сам крестик)
+    if (evt.target.classList.contains('popup__close-button')) {
+      //закрываю попап
+      closePopup(popup);
+    }
+  })
+})
+
+
 //функция открытия попапа Name
-function openPopupName() {
+function handleOpenPopupName() {
   //получаю значения полей попапа со страницы
   popupName.value = profileName.textContent;
   popupWork.value = profileWork.textContent;
@@ -132,18 +148,11 @@ function openPopupName() {
 function handleName(evt) {
   //сброс стандартной обработки события
   evt.preventDefault();
-  //выбираю текущую форму
-  const currentForm = evt.target;
-  //проверяю, что форма валидка
-  if (currentForm.checkValidity) {
-    //пердаю значения полей попапа на страницу
-    profileName.textContent = popupName.value;
-    profileWork.textContent = popupWork.value;
-    //закрываю попап
-    closePopup(popupElementEditBio);
-    //сбрасываю форму
-    currentForm.reset();
-  }
+  //передаю значения полей попапа на страницу
+  profileName.textContent = popupName.value;
+  profileWork.textContent = popupWork.value;
+  //закрываю попап
+  closePopup(popupElementEditBio);
 }
 
 //функция закрытия и сохранения попапа Pic
@@ -152,49 +161,21 @@ function handlePic(evt) {
   evt.preventDefault();
   //выбираю текущую форму
   const currentForm = evt.target;
-  //проверяю, что форма валидка
-  if (currentForm.checkValidity) {
-    //генерация новой карточки с прослушкой событий
-    const newCard = createCards(popupPicName.value, popupPicUrl.value);
-    //добавляю карточку в ДОМ
-    prependCard(elements, newCard);
-    //обнуляю значения
-    pictureText.value = "";
-    pictureImg.value = "";
-    //закрываю попап
-    closePopup(popupElementEditPic);
-    //сбрасываю форму
-    currentForm.reset();
-  }
+  //генерация новой карточки с прослушкой событий
+  const newCard = createCards(popupPicName.value, popupPicUrl.value);
+  //добавляю карточку в ДОМ
+  prependCard(elements, newCard);
+  //сбрасываю форму
+  currentForm.reset();
+  //закрываю попап
+  closePopup(popupElementEditPic);
 }
 
-enableValidation(submitButtonSelector, inactiveButtonClass, errorClass);
+// enableValidation(settings);
 
 //слушаю клики по кнопкам открыть окно
-profileEdit.addEventListener("click", openPopupName);
-photoAdd.addEventListener("click", () => {
-  openPopup(popupElementEditPic);
-});
-// //слушаю клики по кнопкам закрыть окно
-closeEdit.addEventListener("click", () => {
-  closePopup(popupElementEditBio);
-});
-closePic.addEventListener("click", () => {
-  closePopup(popupElementEditPic);
-});
-closePicture.addEventListener("click", () => {
-  closePopup(popupBigPicture);
-});
-//слушаю клики по оверлею
-popupElementEditBio.addEventListener("click", (evt) => {
-  ovrlayClose(evt, popupElementEditBio);
-});
-popupElementEditPic.addEventListener("click", (evt) => {
-  ovrlayClose(evt, popupElementEditPic);
-});
-popupBigPicture.addEventListener("click", (evt) => {
-  ovrlayClose(evt, popupBigPicture);
-});
+profileEdit.addEventListener("click", handleOpenPopupName);
+photoAdd.addEventListener("click", () => {openPopup(popupElementEditPic)});
 
 //слушаю клики на закрытие и сохранение
 formSaveName.addEventListener("submit", handleName);

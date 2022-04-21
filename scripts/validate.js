@@ -1,54 +1,77 @@
-// включение валидации вызовом enableValidation
-const enableValidation = (
-  submitButtonSelector,
-  inactiveButtonClass,
-  errorClass
-) => {
-  //вывожу ошибку в спан
-  const valideteInput = (input, isValid) => {
-    //выбираю нужный спан
-    const errorElement = input.parentNode.querySelector(`#${input.name}-error`);
-    //достаю значение ощибки из Validation API
-    errorElement.textContent = input.validationMessage;
-    //если есть ошибка, вывожу подчеркивание
-    if (isValid) {
-      input.classList.remove(errorClass);
-    } else {
-      input.classList.add(errorClass);
-    }
-  };
+//{formSelector, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass}
 
-  //кнопка активна
-  const enableButton = (button, inactiveButtonClass) => {
-    button.disabled = false;
-    button.classList.remove(inactiveButtonClass);
-  };
-  //кнопка не активна
-  const disableButton = (button, inactiveButtonClass) => {
-    button.disabled = true;
-    button.classList.add(inactiveButtonClass);
-  };
-  //здесь установим состояние кнопки save-button
-  //в зависимости от наличия ошибок в полях ввода
-  const setButtonState = (button, isValid) => {
-    if (isValid) {
-      enableButton(button, inactiveButtonClass); //убрал 'popup__save-button_invalid' в константу
-    } else {
-      disableButton(button, inactiveButtonClass); //убрал 'popup__save-button_invalid' в константу
-    }
-  };
 
-  //проверка инпута в момент ввода данных
-  const handleInput = (event) => {
-    const currentForm = event.currentTarget;
-    const input = event.target;
-    const submitButton = currentForm.querySelector(submitButtonSelector); //убрал '.popup__save-button' в переменную
-    //проверка инпута
-    valideteInput(input, currentForm.checkValidity());
-    //ативность кнопки
-    setButtonState(submitButton, currentForm.checkValidity());
-  };
-
-  formSaveName.addEventListener("input", handleInput);
-  formSavePic.addEventListener("input", handleInput);
+const showInputError = (formElement, inputElement, errorMessage, settings) => {
+  const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
+  inputElement.classList.add(settings.inputErrorClass);
+  errorElement.textContent = errorMessage;
+  errorElement.classList.add(settings.errorClass);
 };
+const hideInputError = (formElement, inputElement, settings) => {
+  const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
+  inputElement.classList.remove(settings.inputErrorClass);
+  errorElement.classList.remove(settings.errorClass);
+  errorElement.textContent = '';
+};
+
+const checkInputValidity = (formElement, inputElement, settings) => {
+  if (!inputElement.validity.valid) {
+    showInputError(formElement, inputElement, inputElement.validationMessage, settings);
+  } else {
+    hideInputError(formElement, inputElement, settings);
+  }
+};
+
+const setEventListeners = (formElement, settings) => {
+  const inputList = Array.from(formElement.querySelectorAll(settings.inputSelector)); //селектор инпута
+  const buttonElement = formElement.querySelector(settings.submitButtonSelector); //селектор кнопки
+  toggleButtonState(inputList, buttonElement, settings); // состояние кнопки в самом начале
+    inputList.forEach((inputElement) => {
+    inputElement.addEventListener('input', function () {
+      toggleButtonState(inputList, buttonElement, settings);  // состояние кнопки при изменении любого из полей
+      checkInputValidity(formElement, inputElement, settings);  // состояние ошибки инпута при изменении любого из полей
+    });
+  });
+};
+
+let hasInvalidInput = (inputList) => {
+  return inputList.some((inputElement) => {
+    return !inputElement.validity.valid;
+  });
+}
+
+const toggleButtonState = (inputList, buttonElement, settings) => {
+  if (hasInvalidInput(inputList)) {
+    buttonElement.classList.add(settings.inactiveButtonClass);
+  } else {
+    buttonElement.classList.remove(settings.inactiveButtonClass);
+  }
+}
+
+const enableValidation = (settings) => {
+  const formList = Array.from(document.querySelectorAll(settings.formSelector));
+  formList.forEach((formElement) => {
+    formElement.addEventListener('submit', (evt) => {
+      evt.preventDefault();
+    });
+  setEventListeners(formElement, settings);
+  });
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

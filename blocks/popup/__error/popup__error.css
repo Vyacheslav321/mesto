@@ -14,3 +14,10 @@
   justify-self: start;
   z-index: 100;
 }
+
+@media screen and (max-width: 567px) {
+  .error {
+    width: 238px;
+    min-height: 16px;
+  }
+}

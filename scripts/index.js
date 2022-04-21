@@ -37,6 +37,7 @@ const popupPicUrl = popupElementEditPic.querySelector(
 );
 //обьявляю кнопки закрытия и сохранения формы
 const formSavePic = popupElementEditPic.querySelector(".popup__form");
+const saveButtonPic = popupElementEditPic.querySelector('.popup__save-button')
 
 ////обьявляю попап фото
 const popupBigPicture = document.querySelector(".popup_type_bigpicture");
@@ -104,7 +105,6 @@ function handleEscape(event) {
 
 //функция открытия попапа
 function openPopup(popup) {
-  enableValidation(settings);
   popup.classList.add(popupOpenedClass);
   document.addEventListener("keyup", handleEscape);
 }
@@ -167,11 +167,14 @@ function handlePic(evt) {
   prependCard(elements, newCard);
   //сбрасываю форму
   currentForm.reset();
+  //и деактевирую кнопку отправки
+  saveButtonPic.classList.add(settings.inactiveButtonClass);
+  saveButtonPic.disabled = true;
   //закрываю попап
   closePopup(popupElementEditPic);
 }
 
-// enableValidation(settings);
+enableValidation(settings);
 
 //слушаю клики по кнопкам открыть окно
 profileEdit.addEventListener("click", handleOpenPopupName);

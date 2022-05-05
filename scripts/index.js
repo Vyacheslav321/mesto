@@ -38,7 +38,7 @@ const popupPicUrl = popupElementEditPic.querySelector(
 );
 //обьявляю кнопки закрытия и сохранения формы
 const formSavePic = popupElementEditPic.querySelector(".popup__form");
-const saveButtonPic = popupElementEditPic.querySelector(settings.submitButtonSelector)
+const saveButtonPic = popupElementEditPic.querySelector(settings.submitButtonSelector);
 
 ////обьявляю попап фото
 const popupBigPicture = document.querySelector(".popup_type_bigpicture");
@@ -132,8 +132,8 @@ popups.forEach((popup) => {
       //закрываю попап
       closePopup(popup);
     }
-  })
-})
+  });
+});
 
 
 //функция открытия попапа Name
@@ -179,7 +179,9 @@ enableValidation(settings);
 
 //слушаю клики по кнопкам открыть окно
 profileEdit.addEventListener("click", handleOpenPopupName);
-photoAdd.addEventListener("click", () => {openPopup(popupElementEditPic)});
+photoAdd.addEventListener("click", () => {
+  openPopup(popupElementEditPic);
+});
 
 //слушаю клики на закрытие и сохранение
 formSaveName.addEventListener("submit", handleName);

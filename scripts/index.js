@@ -1,4 +1,31 @@
 // Переменные и постоянные
+const initialCards = [
+  {
+    name: "Архыз",
+    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
+  },
+  {
+    name: "Челябинская область",
+    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
+  },
+  {
+    name: "Иваново",
+    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
+  },
+  {
+    name: "Камчатка",
+    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
+  },
+  {
+    name: "Холмогорский район",
+    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
+  },
+  {
+    name: "Байкал",
+    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
+  },
+];
+
 const popupOpenedClass = "popup_opened";
 const settings = {
   formSelector: ".popup__form",
@@ -10,7 +37,7 @@ const settings = {
 
 //
 //темплейт карточек
-const cardTemplate = document.querySelector("#card-template").content;
+// const cardTemplate = document.querySelector("#card-template").content;
 const elements = document.querySelector(".elements");
 
 //объявляю все попапы
@@ -49,41 +76,14 @@ const pictureText = popupBigPicture.querySelector(".popup__text");
 //обьявляю батоны открытия
 const profileEdit = document.querySelector(".profile__button-edit");
 const photoAdd = document.querySelector(".profile__button-add");
-//обьявляю батоны закрытия
-const closeEdit = document.querySelector(".popup__close-button_type_edit-bio");
-const closePic = document.querySelector(".popup__close-button_type_edit-pic");
-const closePicture = document.querySelector(".popup__close-button_type_picture");
+// //обьявляю батоны закрытия
+// const closeEdit = document.querySelector(".popup__close-button_type_edit-bio");
+// const closePic = document.querySelector(".popup__close-button_type_edit-pic");
+// const closePicture = document.querySelector(".popup__close-button_type_picture");
 
 //функция генерации карточки и прослушки событий
-function createCards(picName, picUrl) {
-  //клонирую из темплейт див element
-  //присваиваю ему значения name и link из массива
-  const cardElement = cardTemplate.querySelector(".element").cloneNode(true);
-  const cardItemImage = cardElement.querySelector(".element__pic");
-  cardItemImage.src = picUrl;
-  cardItemImage.alt = picName;
-  cardElement.querySelector(".element__text").textContent = picName;
-  //слушаю клик на открытие карточки фото
-  cardItemImage.addEventListener("click", () => {
-    //передаю данные о фото в попап фото и открываю его
-    pictureImg.src = picUrl;
-    pictureImg.alt = picName;
-    pictureText.textContent = picName;
-    openPopup(popupBigPicture);
-  });
-  //слушаю клик на лайк и обрабатываю его
-  const addLike = cardElement.querySelector(".element__like");
-  addLike.addEventListener("click", () => {
-    addLike.classList.toggle("element__like_active");
-  });
-  //слушаю клик на удаление и обрабатываю его
-  const trash = cardElement.querySelector(".element__trash");
-  trash.addEventListener("click", () => {
-    cardElement.remove();
-  });
-  //возвращаю результат
-  return cardElement;
-}
+import { Card } from './card.js';
+import { FormValidator } from './FormValidator.js';
 
 function prependCard(element, Card) {
   element.prepend(Card);
@@ -92,26 +92,27 @@ function prependCard(element, Card) {
 // Рисую в DOM карточки с фотографиями
 //генерирую страницу из массива по умолчанию
 initialCards.forEach((item) => {
-  const newCard = createCards(item.name, item.link);
-  prependCard(elements, newCard);
+  const newCard = new Card(item.name, item.link);
+  const cardElement = newCard.generateCard();
+  prependCard(elements, cardElement);
 });
 
 // выход по ESC
 function handleEscape(event) {
   if (event.key === "Escape") {
     const activePopup = document.querySelector(".popup_opened");
-    closePopup(activePopup);
+    handleclosePopup(activePopup);
   }
 }
 
 //функция открытия попапа
-function openPopup(popup) {
+function handleOpenPopup(popup) {
   popup.classList.add(popupOpenedClass);
   document.addEventListener("keyup", handleEscape);
 }
 
 //функция закрытия попапа
-function closePopup(popup) {
+function handleclosePopup(popup) {
   popup.classList.remove(popupOpenedClass);
   document.removeEventListener("keyup", handleEscape);
 }
@@ -125,12 +126,12 @@ popups.forEach((popup) => {
     //содержит класс popup_opened (пространство вне контейнера попапа)
     if (evt.target.classList.contains('popup_opened')) {
       //закрываю попап
-      closePopup(popup);
+      handleclosePopup(popup);
     }
     //или содержит класс popup__close-button (сам крестик)
     if (evt.target.classList.contains('popup__close-button')) {
       //закрываю попап
-      closePopup(popup);
+      handleclosePopup(popup);
     }
   });
 });
@@ -142,7 +143,14 @@ function handleOpenPopupName() {
   popupName.value = profileName.textContent;
   popupWork.value = profileWork.textContent;
   //открываю попап
-  openPopup(popupElementEditBio);
+  handleOpenPopup(popupElementEditBio);
+}
+
+export function handlePopupImage(picName, picUrl) {
+  pictureImg.src = picUrl;
+  pictureImg.alt = picName;
+  pictureText.textContent = picName;
+  handleOpenPopup(popupBigPicture);
 }
 
 //функция закрытия и сохранения попапа Name
@@ -153,7 +161,7 @@ function handleName(evt) {
   profileName.textContent = popupName.value;
   profileWork.textContent = popupWork.value;
   //закрываю попап
-  closePopup(popupElementEditBio);
+  handleclosePopup(popupElementEditBio);
 }
 
 //функция закрытия и сохранения попапа Pic
@@ -163,24 +171,27 @@ function handlePic(evt) {
   //выбираю текущую форму
   const currentForm = evt.target;
   //генерация новой карточки с прослушкой событий
-  const newCard = createCards(popupPicName.value, popupPicUrl.value);
+  const newCard = new Card(popupPicName.value, popupPicUrl.value);
+  const cardElement = newCard.generateCard();
   //добавляю карточку в ДОМ
-  prependCard(elements, newCard);
+  prependCard(elements, cardElement);
   //сбрасываю форму
   currentForm.reset();
   //и деактевирую кнопку отправки
   saveButtonPic.classList.add(settings.inactiveButtonClass);
   saveButtonPic.disabled = true;
   //закрываю попап
-  closePopup(popupElementEditPic);
+  handleclosePopup(popupElementEditPic);
 }
 
-enableValidation(settings);
+//запускаю проверки для форм Name и Pic
+new FormValidator(settings, formSaveName).enableValidation();
+new FormValidator(settings, formSavePic).enableValidation();
 
 //слушаю клики по кнопкам открыть окно
 profileEdit.addEventListener("click", handleOpenPopupName);
 photoAdd.addEventListener("click", () => {
-  openPopup(popupElementEditPic);
+  handleOpenPopup(popupElementEditPic);
 });
 
 //слушаю клики на закрытие и сохранение

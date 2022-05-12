@@ -1,14 +1,15 @@
-import { handlePopupImage } from './index.js';
+import { handlePopupImage } from './index.js';  //импорт функции просмотра фото
 
 export class Card {
-  constructor(picName, picUrl) {
+  constructor(picName, picUrl, cardTemplate) {
       this._picName = picName;
       this._picUrl = picUrl;
+      this._cardTemplate = cardTemplate;
       this._handlePopupImage = handlePopupImage;
   }
 
   _getTemplate() {
-    const cardElement = document.querySelector("#card-template").content.querySelector('.element').cloneNode(true);
+    const cardElement = document.querySelector(this._cardTemplate).content.querySelector('.element').cloneNode(true);
     return cardElement;
   }
 

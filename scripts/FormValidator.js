@@ -44,10 +44,14 @@ _hasInvalidInput = () => {
     });
   };
 
+toggleButtonDisable = () => {
+  this._buttonElement.classList.add(this._settings.inactiveButtonClass);
+  this._buttonElement.disabled = true;
+};
+
 _toggleButtonState = () => {
     if (this._hasInvalidInput()) {
-      this._buttonElement.classList.add(this._settings.inactiveButtonClass);
-      this._buttonElement.disabled = true;
+      this.toggleButtonDisable();
     } else {
       this._buttonElement.classList.remove(this._settings.inactiveButtonClass);
       this._buttonElement.disabled = false;

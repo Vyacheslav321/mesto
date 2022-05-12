@@ -60,7 +60,7 @@ popups.forEach((popup) => {  //прохожу по всем найденным �
     //если элемент, на котором произошло событие
     //содержит класс popup_opened (пространство вне контейнера попапа)
     //или содержит класс popup__close-button (сам крестик)
-    if (evt.target.classList.contains('popup_opened') || evt.target.classList.contains('popup__close-button')) {
+    if (evt.target.classList.contains(popupOpenedClass) || evt.target.classList.contains('popup__close-button')) {
       handleClosePopup(popup);  //закрываю попап
     }
   });

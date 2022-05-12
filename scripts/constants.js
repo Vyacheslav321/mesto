@@ -90,5 +90,5 @@ export {
   pictureImg,
   pictureText,
   profileEdit,
-  photoAdd,
+  photoAdd
 };

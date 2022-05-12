@@ -48,4 +48,4 @@ export class Card {
     this._element.querySelector(".element__text").textContent = this._picName;
     return this._element;
   }
-}
+};

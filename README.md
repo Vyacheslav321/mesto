@@ -1,4 +1,4 @@
-# Проектная работа №4, 5, 6: Mesto-Russia
+# Проектная работа №4, 5, 6, 7: Mesto-Russia
 
 Данный репозиторий создан в рамках обучения на [Yandex.Practicum](https://practicum.yandex.ru "Я практикум")
 

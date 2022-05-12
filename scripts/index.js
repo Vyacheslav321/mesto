@@ -89,7 +89,7 @@ function handleSavePic(evt) {
   const cardElement = new Card(popupPicName.value, popupPicUrl.value, cardTemplate).generateCard();  //генерация новой карточки с прослушкой событий
   prependCard(elements, cardElement);  //добавляю карточку в ДОМ
   currentForm.reset();  //сбрасываю форму
-  new FormValidator(settings, currentForm).toggleButtonDisable();  //и деактевирую кнопку отправки
+  formValidationPic.disableSubmitButton();  //и деактевирую кнопку отправки
   handleClosePopup(popupElementEditPic);  //закрываю попап
 }
 

@@ -20,7 +20,7 @@ import {
 } from './constants.js';
 
 //функция генерации карточки и прослушки событий
-import { Card } from './Card.js';
+import { Card } from './Сard.js';
 import { FormValidator } from './FormValidator.js';
 
 // Рисую в DOM карточки с фотографиями

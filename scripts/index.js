@@ -37,7 +37,7 @@ const settings = {
 
 //
 //темплейт карточек
-// const cardTemplate = document.querySelector("#card-template").content;
+const cardTemplate = document.querySelector("#card-template").content;
 const elements = document.querySelector(".elements");
 
 //объявляю все попапы
@@ -77,9 +77,9 @@ const pictureText = popupBigPicture.querySelector(".popup__text");
 const profileEdit = document.querySelector(".profile__button-edit");
 const photoAdd = document.querySelector(".profile__button-add");
 // //обьявляю батоны закрытия
-// const closeEdit = document.querySelector(".popup__close-button_type_edit-bio");
-// const closePic = document.querySelector(".popup__close-button_type_edit-pic");
-// const closePicture = document.querySelector(".popup__close-button_type_picture");
+const closeEdit = document.querySelector(".popup__close-button_type_edit-bio");
+const closePic = document.querySelector(".popup__close-button_type_edit-pic");
+const closePicture = document.querySelector(".popup__close-button_type_picture");
 
 //функция генерации карточки и прослушки событий
 import { Card } from './card.js';
@@ -92,8 +92,7 @@ function prependCard(element, Card) {
 // Рисую в DOM карточки с фотографиями
 //генерирую страницу из массива по умолчанию
 initialCards.forEach((item) => {
-  const newCard = new Card(item.name, item.link);
-  const cardElement = newCard.generateCard();
+  const cardElement = new Card (item.name, item.link, handlePopupImage).generateCard();
   prependCard(elements, cardElement);
 });
 

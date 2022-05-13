@@ -1,5 +1,5 @@
 //карточки по-умолчанию
-const initialCards = [
+export const initialCards = [
   {
     name: "Архыз",
     link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
@@ -27,9 +27,9 @@ const initialCards = [
 ];
 
 //селекторы и классы
-const cardTemplate = "#card-template";
-const popupOpenedClass = "popup_opened";
-const settings = {
+export const cardTemplate = "#card-template";
+export const popupOpenedClass = "popup_opened";
+export const settings = {
   formSelector: ".popup__form",
   inputSelector: ".popup__input",
   submitButtonSelector: ".popup__save-button",
@@ -38,57 +38,33 @@ const settings = {
   errorClass: "popup__error_visible",
 };
 
-const elements = document.querySelector(".elements"); //темплейт карточек
-const popups = document.querySelectorAll(".popup"); //объявляю все попапы
+export const elements = document.querySelector(".elements"); //темплейт карточек
+export const popups = document.querySelectorAll(".popup"); //объявляю все попапы
 //обьявляю попап изменения имени/работы (name)
-const popupElementEditBio = document.querySelector(".popup_type_edit-bio");
+export const popupElementEditBio = document.querySelector(".popup_type_edit-bio");
 //поля карточки изменения имени/работы (name)
-const popupName = popupElementEditBio.querySelector(".popup__input_type_name");
-const popupWork = popupElementEditBio.querySelector(".popup__input_type_work");
-const formSaveName = popupElementEditBio.querySelector(".popup__form"); //форма изменения имени/работы (name)
+export const popupName = popupElementEditBio.querySelector(".popup__input_type_name");
+export const popupWork = popupElementEditBio.querySelector(".popup__input_type_work");
+export const formSaveName = popupElementEditBio.querySelector(".popup__form"); //форма изменения имени/работы (name)
 //поля вывода имени/работы в форме (name)
-const profileName = document.querySelector(".profile__name");
-const profileWork = document.querySelector(".profile__work");
+export const profileName = document.querySelector(".profile__name");
+export const profileWork = document.querySelector(".profile__work");
 //обьявляю попап добавления карточки (pic)
-const popupElementEditPic = document.querySelector(".popup_type_edit-pic");
+export const popupElementEditPic = document.querySelector(".popup_type_edit-pic");
 //поля формы добавления карточки (pic)
-const popupPicName = popupElementEditPic.querySelector(
+export const popupPicName = popupElementEditPic.querySelector(
   ".popup__input_type_picname"
 );
-const popupPicUrl = popupElementEditPic.querySelector(
+export const popupPicUrl = popupElementEditPic.querySelector(
   ".popup__input_type_picurl"
 );
-const formSavePic = popupElementEditPic.querySelector(".popup__form"); //фома добавления карточки (pic)
+export const formSavePic = popupElementEditPic.querySelector(".popup__form"); //фома добавления карточки (pic)
 //обьявляю попап фото
-const popupBigPicture = document.querySelector(".popup_type_bigpicture");
+export const popupBigPicture = document.querySelector(".popup_type_bigpicture");
 //поля вывода просмотра фото
-const pictureImg = popupBigPicture.querySelector(".popup__picture");
-const pictureText = popupBigPicture.querySelector(".popup__text");
+export const pictureImg = popupBigPicture.querySelector(".popup__picture");
+export const pictureText = popupBigPicture.querySelector(".popup__text");
 
 //кнопки открытия форм
-const profileEdit = document.querySelector(".profile__button-edit");
-const photoAdd = document.querySelector(".profile__button-add");
-
-export {
-  initialCards,
-  cardTemplate,
-  popupOpenedClass,
-  settings,
-  elements,
-  popups,
-  popupElementEditBio,
-  popupName,
-  popupWork,
-  formSaveName,
-  profileName,
-  profileWork,
-  popupElementEditPic,
-  popupPicName,
-  popupPicUrl,
-  formSavePic,
-  popupBigPicture,
-  pictureImg,
-  pictureText,
-  profileEdit,
-  photoAdd
-};
+export const profileEdit = document.querySelector(".profile__button-edit");
+export const photoAdd = document.querySelector(".profile__button-add");

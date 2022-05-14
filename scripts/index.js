@@ -50,6 +50,7 @@ export function handleOpenPopup(popup) {
 
 //функция закрытия попапа
 function handleClosePopup(popup) {
+  formValidationName.resetValidator();
   popup.classList.remove(popupOpenedClass);
   document.removeEventListener("keyup", handleEscape);
 }

@@ -1,6 +1,6 @@
-import { handlePopupImage } from './utils.js';  //импорт функции просмотра фото
+import { handlePopupImage } from '../utils/utils.js';  //импорт функции просмотра фото
 
-export class Card {
+export default class Card {
   constructor(picName, picUrl, cardTemplate) {
       this._picName = picName;
       this._picUrl = picUrl;

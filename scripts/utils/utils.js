@@ -1,5 +1,5 @@
 import {pictureImg, pictureText, popupBigPicture} from './constants.js';
-import {handleOpenPopup} from './index.js';
+import {handleOpenPopup} from '../pages/index.js';
 //функция просмотра фото в полный размер
 export function handlePopupImage(picName, picUrl) {
   pictureImg.src = picUrl;

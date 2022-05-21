@@ -1,10 +1,10 @@
 //Для каждого попапа создавайте свой экземпляр класса PopupWithForm
-
-class PopupWithForm {
-  constructor (Popup, колбэк_сабмита_формы) {
-    super.Popup
+//PIC
+class PopupWithForm extends Popup {
+  constructor (popupSelector, колбэк_сабмита_формы) {
+    super(popupSelector)
   };
-  open() {  //здесь вставлять в попап картинку с src изображения и подписью к картинке
+  handleOpenPopup() {  //здесь вставлять в попап картинку с src изображения и подписью к картинке
 
   };
   _getInputValues() { //собирает данные всех полей формы
@@ -14,7 +14,7 @@ class PopupWithForm {
     //добавляю обработчик клика иконке закрытия
     //добавляю обработчик сабмита формы
   };
-  close() {
+  handleClosePopup() {
     //при закрытии попапа форма должна сбрасываться
   };
 }

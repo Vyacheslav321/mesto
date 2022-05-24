@@ -1,15 +1,14 @@
-import { handlePopupImage } from '../utils/utils.js';  //импорт функции просмотра фото
+import {handleCardClick} from '../utils/utils.js';  //импорт функции просмотра фото
 
 export default class Card {
-  constructor(picName, picUrl, cardTemplate) {
+  constructor({picName, picUrl}) {
       this._picName = picName;
       this._picUrl = picUrl;
-      this._cardTemplate = cardTemplate;
-      this._handlePopupImage = handlePopupImage;
+      this._handleCardClick= handleCardClick
   }
 
   _getTemplate() {
-    const cardElement = document.querySelector(this._cardTemplate).content.querySelector('.element').cloneNode(true);
+    const cardElement = document.querySelector("#card-template").content.querySelector('.element').cloneNode(true);
     return cardElement;
   }
 
@@ -26,7 +25,7 @@ export default class Card {
   }
 
  _handleImageClick() {
-    this._handlePopupImage(this._picName, this._picUrl);
+    this._handleCardClick(this._picName, this._picUrl);
   }
 
   _handleDeleteClick() {

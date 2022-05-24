@@ -39,7 +39,7 @@ export const settings = {
 };
 
 export const elements = document.querySelector(".elements"); //темплейт карточек
-export const popupSelector = document.querySelectorAll(".popup"); //объявляю все попапы
+export const popupSelectorAll = document.querySelectorAll(".popup"); //объявляю все попапы
 //обьявляю попап изменения имени/работы (name)
 export const popupElementEditBio = document.querySelector(".popup_type_edit-bio");
 //поля карточки изменения имени/работы (name)

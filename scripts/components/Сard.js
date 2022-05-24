@@ -14,7 +14,7 @@ export default class Card {
 
   _setEventListeners() {
     this._elementPic.addEventListener('click', () => {
-      this._handleImageClick(this._picName, this._picUrl);
+      this._handleCardClick(this._picName, this._picUrl);
     });
     this._element.querySelector('.element__trash').addEventListener('click', () => {
       this._handleDeleteClick();
@@ -22,10 +22,6 @@ export default class Card {
     this._elementLike.addEventListener('click', () => {
       this._handleLikeClick();
     });
-  }
-
- _handleImageClick() {
-    this._handleCardClick(this._picName, this._picUrl);
   }
 
   _handleDeleteClick() {

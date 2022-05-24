@@ -8,7 +8,7 @@ export default class Section {
   addItem(cardElement) {  // Рисую в DOM карточки с фотографиями (function prependCard)
     this._elements.prepend(cardElement);
   }
-  generateCard() {
+  generateCards() {
     this._renderedItems.forEach((item) => {
       this._renderer(item);
       // this.addItem(item);

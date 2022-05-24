@@ -43,10 +43,7 @@ const cardElements = new Section(
     }
   }
 );
-cardElements.generateCard();
-
-
-
+cardElements.generateCards();
 
 // функция закрытия попапа по нажатию на оверлей и крестик
 popupSelectorAll.forEach((popup) => {  //прохожу по всем найденным попапам
@@ -76,11 +73,30 @@ function handleSaveName(evt) {
 }
 
 //для формы Pic
-
-
-// function handleSavePic(evt) {
-//   evt.preventDefault(); //сброс стандартной обработки события
-//   const currentForm = evt.target; //выбираю текущую форму
+const popupPicClass = new PopupWithForm(popupElementEditPic);
+//функция открытия
+function handleOpenPopupPic() {
+  popupPicClass.open(); //открываю попап
+}
+//функция закрытия
+function handleSavePic(evt) {
+  evt.preventDefault(); //сброс стандартной обработки события
+  const currentForm = evt.target; //выбираю текущую форму
+  const addNewCard = new PopupWithForm(
+    {
+    renderer: (item, button) => {
+      const newCard = new Card(
+        {
+          picName: item.name,
+          picUrl: item.link
+        }
+      );
+      const cardElement = newCard.generateCard();
+      cardElements.addItem(cardElement);
+    }
+    }
+    , currentForm
+    );
 //   const cardElement = new Card(
 //     popupPicName.value,
 //     popupPicUrl.value,
@@ -88,25 +104,20 @@ function handleSaveName(evt) {
 //   ).generateCard(); //генерация новой карточки с прослушкой событий
 //   prependCard(elements, cardElement); //добавляю карточку в ДОМ
 //   currentForm.reset(); //сбрасываю форму
-//   formValidationPic.disableSubmitButton(); //и деактевирую кнопку отправки
-//   handleClosePopup(popupElementEditPic); //закрываю попап
-// }
+  formValidationPic.disableSubmitButton(); //и деактевирую кнопку отправки
+  popupPicClass.close(); //закрываю попап
+}
 
 //запускаю проверки форм ввода
 const formValidationName = new FormValidator(settings, formSaveName); //для формы Name
-const formValidationPic = new FormValidator(settings, formSavePic); //длля формы Pic
 formValidationName.enableValidation();
+const formValidationPic = new FormValidator(settings, formSavePic); //длля формы Pic
 formValidationPic.enableValidation();
 
 //слушаю клики по кнопкам открыть окно
 profileEdit.addEventListener("click", handleOpenPopupName); //для формы Name
-photoAdd.addEventListener("click", () => {
-  //для формы Pic
-  // handleOpenPopup(popupElementEditPic);
-  const openPopupPic = new Popup(popupElementEditPic); //открываю попап
-  openPopupPic.open();
-});
+photoAdd.addEventListener("click", handleOpenPopupPic); //для формы Pic
 
 //слушаю клики на закрытие и сохранение
-formSaveName.addEventListener("submit", handleSaveName);
-formSavePic.addEventListener("submit", handleSavePic);
+formSaveName.addEventListener("submit", handleSaveName); //для формы Name
+// formSavePic.addEventListener("submit", handleSavePic); //для формы Pic

@@ -1,5 +1,4 @@
 //отвечает за управление отображением информации о пользователе на странице
-//Name
 export default class UserInfo {
   constructor({profileName, profileWork}, popupName, popupWork) {
     this._profileName = profileName,

@@ -72,31 +72,38 @@ function handleSaveName(evt) {
   formValidationName.resetValidator(); //сброс состояния формы
 }
 
+
 //для формы Pic
-const popupPicClass = new PopupWithForm(popupElementEditPic);
-//функция открытия
-function handleOpenPopupPic() {
-  popupPicClass.open(); //открываю попап
-}
-//функция закрытия
-function handleSavePic(evt) {
-  evt.preventDefault(); //сброс стандартной обработки события
-  const currentForm = evt.target; //выбираю текущую форму
-  const addNewCard = new PopupWithForm(
+
+  // evt.preventDefault(); //сброс стандартной обработки события
+  // const currentForm = evt.target; //выбираю текущую форму
+const addNewCard = new PopupWithForm(
     {
     renderer: (item, button) => {
       const newCard = new Card(
-        {
+          {
           picName: item.name,
           picUrl: item.link
-        }
-      );
+          }
+        );
       const cardElement = newCard.generateCard();
       cardElements.addItem(cardElement);
+      } 
     }
-    }
-    , currentForm
-    );
+    , popupElementEditPic
+  );
+
+//функция открытия
+function handleOpenPopupPic() {
+
+  addNewCard.open(); //открываю попап
+};
+//функция закрытия
+function handleSavePic() {
+  addNewCard.setEventListeners();
+  formValidationPic.disableSubmitButton(); //и деактевирую кнопку отправки
+  addNewCard.close(); //закрываю попап
+};
 //   const cardElement = new Card(
 //     popupPicName.value,
 //     popupPicUrl.value,
@@ -104,9 +111,8 @@ function handleSavePic(evt) {
 //   ).generateCard(); //генерация новой карточки с прослушкой событий
 //   prependCard(elements, cardElement); //добавляю карточку в ДОМ
 //   currentForm.reset(); //сбрасываю форму
-  formValidationPic.disableSubmitButton(); //и деактевирую кнопку отправки
-  popupPicClass.close(); //закрываю попап
-}
+
+
 
 //запускаю проверки форм ввода
 const formValidationName = new FormValidator(settings, formSaveName); //для формы Name
@@ -120,4 +126,4 @@ photoAdd.addEventListener("click", handleOpenPopupPic); //для формы Pic
 
 //слушаю клики на закрытие и сохранение
 formSaveName.addEventListener("submit", handleSaveName); //для формы Name
-// formSavePic.addEventListener("submit", handleSavePic); //для формы Pic
+formSavePic.addEventListener("submit", handleSavePic); //для формы Pic

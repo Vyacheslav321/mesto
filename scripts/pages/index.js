@@ -27,14 +27,18 @@ import PopupWithForm from "../components/PopupWithForm.js";
 import FormValidator from "../components/FormValidator.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 
+
+
 // константа класса реализации карточки в DOM
 const cardElements = new Section(
   {
     items: initialCards,
     renderer: (item) => {
-      const newCard = new Card({picName: item.name, picURL: item.link,
-        handleCardClick: (picName, picUrl, popupBigPicture) => {
-          const cardClick = new PopupWithImage(popupBigPicture);
+      const newCard = new Card({
+        picName: item.name,
+        picURL: item.link,
+        handleCardClick: (picName, picUrl, popupElement) => {
+          const cardClick = new PopupWithImage(popupElement);
           cardClick.open(picName, picUrl);
         }
       });
@@ -44,6 +48,7 @@ const cardElements = new Section(
   },
   elements
 );
+
 //генерации карточки и прослушки событий
 cardElements.generateCards();
 // функция закрытия попапа по нажатию на оверлей и крестик
@@ -83,9 +88,17 @@ function handleOpenPopupPic() {
 //функция закрытия
 function handleSavePic(data) {
   const {picName, picURL} = data;
-  const newCard = new Card({picName, picURL});
+  const newCard = new Card(
+    {picName,
+    picURL,
+    handleCardClick: (picName, picUrl, popupElement) => {
+      const cardClick = new PopupWithImage(popupElement);
+      cardClick.open(picName, picUrl);
+    }
+    });
   const cardElement = newCard.generateCard();
   cardElements.addItem(cardElement);
+  // addNewCardClass.setEventListeners()
   addNewCardClass.close();
   formValidationPic.resetValidator();
 };

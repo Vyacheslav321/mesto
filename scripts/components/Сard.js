@@ -1,21 +1,24 @@
-import { handlePopupImage } from './utils.js';  //импорт функции просмотра фото
+import { popupBigPicture } from '../utils/constants.js';
+import PopupWithImage from './PopupWithImage.js';
 
-export class Card {
-  constructor(picName, picUrl, cardTemplate) {
-      this._picName = picName;
-      this._picUrl = picUrl;
-      this._cardTemplate = cardTemplate;
-      this._handlePopupImage = handlePopupImage;
+export default class Card {
+  constructor({picName, picURL, handleCardClick}) {
+      this._picName = picName,
+      this._picUrl = picURL,
+      this.popupBigPicture = popupBigPicture,
+      this._handleCardClick = handleCardClick
   }
 
   _getTemplate() {
-    const cardElement = document.querySelector(this._cardTemplate).content.querySelector('.element').cloneNode(true);
+    const cardElement = document.querySelector("#card-template").content.querySelector('.element').cloneNode(true);
     return cardElement;
   }
 
   _setEventListeners() {
     this._elementPic.addEventListener('click', () => {
-      this._handleImageClick(this._picName, this._picUrl);
+      this._handleCardClick(this._picName, this._picUrl, this.popupBigPicture);
+      // const cardClick = new PopupWithImage(this.popupBigPicture);
+      // cardClick.open(this._picName, this._picUrl);
     });
     this._element.querySelector('.element__trash').addEventListener('click', () => {
       this._handleDeleteClick();
@@ -23,10 +26,6 @@ export class Card {
     this._elementLike.addEventListener('click', () => {
       this._handleLikeClick();
     });
-  }
-
- _handleImageClick() {
-    this._handlePopupImage(this._picName, this._picUrl);
   }
 
   _handleDeleteClick() {

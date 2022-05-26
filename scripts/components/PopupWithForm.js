@@ -1,4 +1,4 @@
-//Для каждого попапа создавайте свой экземпляр класса PopupWithForm
+//отвечает за открытие попапа для каждой формы
 import {settings } from "../utils/constants.js";
 import Popup from "./Popup.js";
 export default class PopupWithForm extends Popup {

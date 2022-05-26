@@ -1,4 +1,4 @@
-//Для каждого попапа создавайте свой экземпляр класса PopupWithForm
+//отвечает за открытие большого фото
 //BigPicture
 import {pictureImg, pictureText} from '../utils/constants.js';
 import Popup from "./Popup.js";

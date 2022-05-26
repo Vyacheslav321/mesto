@@ -1,3 +1,4 @@
+//отвечает за открытие и закрытие попапа
 export default class Popup {
   constructor(popupElement) {
     (this.popupElement = popupElement),

@@ -25,43 +25,25 @@ import Popup from "../components/Popup.js";
 import UserInfo from "../components/UserInfo.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import FormValidator from "../components/FormValidator.js";
-
-// константа класса юзерФормы
-const userInfoClass = new UserInfo(profileName, profileWork, {popupName, popupWork});
-
-// const popupNameClass = new Popup(popupElementEditBio);
-const popupNameClass = new PopupWithForm
-  (
-    {renderer: (data) => {handleSaveName (data)}},
-    popupElementEditBio
-  );
-
-  // константа сласса реализации добавления новой карточки
-const addNewCardClass = new PopupWithForm
-  (
-    {renderer: (data) => {handleSavePic(data)}},
-    popupElementEditPic
-  );
+import PopupWithImage from "../components/PopupWithImage.js";
 
 // константа класса реализации карточки в DOM
 const cardElements = new Section(
   {
     items: initialCards,
     renderer: (item) => {
-      const newCard = new Card(
-        {
-          picName: item.name,
-          picURL: item.link
+      const newCard = new Card({picName: item.name, picURL: item.link,
+        handleCardClick: (picName, picUrl, popupBigPicture) => {
+          const cardClick = new PopupWithImage(popupBigPicture);
+          cardClick.open(picName, picUrl);
         }
-      );
+      });
       const cardElement = newCard.generateCard();
       cardElements.addItem(cardElement)
     }
-  }
+  },
+  elements
 );
-
-
-
 //генерации карточки и прослушки событий
 cardElements.generateCards();
 // функция закрытия попапа по нажатию на оверлей и крестик
@@ -72,11 +54,12 @@ popupSelectorAll.forEach((popup) => {  //прохожу по всем найде
   });
 });
 
-
-
 // открытие и закрытие формы Name
+// const popupNameClass = new Popup(popupElementEditBio);
+const popupNameClass = new PopupWithForm ({renderer: (data) => {handleSaveName (data)}}, popupElementEditBio);
 //функция открытия
 function handleOpenPopupName() {
+  const userInfoClass = new UserInfo(profileName, profileWork, {popupName, popupWork});
   //получаю значения полей попапа со страницы
   userInfoClass.getUserInfo();
   popupNameClass.open(); //открываю попап
@@ -90,13 +73,14 @@ function handleSaveName (data) {
     formValidationName.resetValidator();
 };
 
-
-//для формы Pic
+// открытие и закрытие формы Pic
+// константа сласса реализации добавления новой карточки
+const addNewCardClass = new PopupWithForm ({renderer: (data) => {handleSavePic(data)}}, popupElementEditPic);
 //функция открытия
 function handleOpenPopupPic() {
   addNewCardClass.open();
 };
-
+//функция закрытия
 function handleSavePic(data) {
   const {picName, picURL} = data;
   const newCard = new Card({picName, picURL});
@@ -105,28 +89,6 @@ function handleSavePic(data) {
   addNewCardClass.close();
   formValidationPic.resetValidator();
 };
-  // addNewCard.setEventListeners();
-  // photoAdd.addEventListeners("click", function () {
-  //   addNewCard.open();
-
-  //   formValidationPic.disableSubmitButton(); //и деактевирую кнопку отправки
-  // });
-
-
-
-//   addNewCard.setEventListeners();
-//   formValidationPic.disableSubmitButton(); //и деактевирую кнопку отправки
-//   addNewCard.close(); //закрываю попап
-// };
-//   const cardElement = new Card(
-//     popupPicName.value,
-//     popupPicUrl.value,
-//     cardTemplate
-//   ).generateCard(); //генерация новой карточки с прослушкой событий
-//   prependCard(elements, cardElement); //добавляю карточку в ДОМ
-//   currentForm.reset(); //сбрасываю форму
-
-
 
 //запускаю проверки форм ввода
 const formValidationName = new FormValidator(settings, formSaveName); //для формы Name
@@ -141,24 +103,3 @@ photoAdd.addEventListener("click", handleOpenPopupPic); //для формы Pic
 //слушаю клики на закрытие и сохранение
 popupNameClass.setEventListeners();
 addNewCardClass.setEventListeners();
-// formSaveName.addEventListener("submit", handleSaveName); //для формы Name
-// formSavePic.addEventListener("submit", handleSavePic); //для формы Pic
-
-
-
-
-// const popupNameClass = new Popup(popupElementEditBio);
-// открытие и закрытие формы Name
-//функция открытия
-// function handleOpenPopupName() {
-//   //получаю значения полей попапа со страницы
-//   userInfoClass.getUserInfo();
-//   popupNameClass.open(); //открываю попап
-// }
-// //функции закрытия и сохранения
-// function handleSaveName(evt) {
-//   evt.preventDefault(); //сброс стандартной обработки события
-//   userInfoClass.setUserInfo(); //записываю введенные данные
-//   popupNameClass.close(); //закрываю попап
-//   formValidationName.resetValidator(); //сброс состояния формы
-// }

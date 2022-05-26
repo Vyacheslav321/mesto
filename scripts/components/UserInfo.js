@@ -1,6 +1,6 @@
 //отвечает за управление отображением информации о пользователе на странице
 export default class UserInfo {
-  constructor({profileName, profileWork}, popupName, popupWork) {
+  constructor(profileName, profileWork, {popupName, popupWork}) {
     this._profileName = profileName,
     this._profileWork = profileWork,
     this._popupName = popupName,
@@ -11,7 +11,7 @@ export default class UserInfo {
     this._popupWork.value = this._profileWork.textContent;
   };
   setUserInfo() {
-    this._profileName.textContent = this._popupName.value;  //передаю значения полей попапа на страницу
-    this._profileWork.textContent = popupWork.value;  //передаю значения полей попапа на страницу
+    this._profileName.textContent = this._popupName;  //передаю значения полей попапа на страницу
+    this._profileWork.textContent = this._popupWork;  //передаю значения полей попапа на страницу
   };
 };

@@ -1,3 +1,4 @@
+//отвечает за отрисовку элементов на странице
 export default class Section {
   constructor({items, renderer}) {
     this._renderedItems = items;//массив данных, которые нужно добавить на страницу при инициализации класса
@@ -11,7 +12,6 @@ export default class Section {
   generateCards() {
     this._renderedItems.forEach((item) => {
       this._renderer(item);
-      // this.addItem(item);
     });
   }
 }

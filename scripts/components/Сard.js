@@ -1,5 +1,5 @@
 import { popupBigPicture } from '../utils/constants.js';
-import PopupWithImage from './PopupWithImage.js';
+// import PopupWithImage from './PopupWithImage.js';
 
 export default class Card {
   constructor({picName, picURL, handleCardClick}) {

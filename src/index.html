@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./pages/index.css">
+    <!-- <link rel="stylesheet" href="./pages/index.css"> -->
     <title>Место</title>
 </head>
 <body class="page">
@@ -15,7 +15,7 @@
   <main>
 <!-- PROFILE -->
     <section class="profile">
-      <img class="profile__avatar" src="./images/profile__avatar_image.jpg" alt="аватар">
+      <img class="profile__avatar" src="<%=require('./images/profile__avatar_image.jpg')%>" alt="аватар">
       <div class="profile__info">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
           <button class="profile__button-edit" type="button" aria-label="Редактировать"></button>
@@ -70,14 +70,14 @@
   <section class="popup popup_type_bigpicture">
     <div class="popup__container popup__container_type_picture">
       <button class="popup__close-button popup__close-button_type_picture" type="button" aria-label="Закрыть"></button>
-      <img class="popup__picture" src="./images/elements__like_unactive.svg" alt="Картинка">
+      <img class="popup__picture" src="<%=require('./images/elements__like_unactive.svg')%>" alt="Картинка">
       <p class="popup__text"></p>
     </div>
   </section>
 <!-- TEMPLATE -->
   <template id="card-template">
     <div class="element">
-      <img class="element__pic" src="./images/elements__like_unactive.svg" alt="Картинка">
+      <img class="element__pic" src="<%=require('./images/elements__like_unactive.svg')%>" alt="Картинка">
       <div class="element__trash"></div>
       <div class="element__description">
         <h2 class="element__text"></h2>
@@ -85,7 +85,7 @@
       </div>
     </div>
   </template>
-  <script type="module" src="./scripts/utils/constants.js"></script>
+  <!-- <script type="module" src="./scripts/utils/constants.js"></script>
   <script type="module" src="./scripts/utils/utils.js"></script>
   <script type="module" src="./scripts/pages/index.js"></script>
   <script type="module" src="./scripts/components/Section.js"></script>
@@ -94,6 +94,6 @@
   <script type="module" src="./scripts/components/PopupWithImage.js"></script>
   <script type="module" src="./scripts/components/UserInfo.js"></script>
   <script type="module" src="./scripts/components/PopupWithForm.js"></script>
-  <script type="module" src="./scripts/components/FormValidator.js"></script>
+  <script type="module" src="./scripts/components/FormValidator.js"></script> -->
 </body>
 </html>

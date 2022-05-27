@@ -1,20 +1,15 @@
-import '../../pages/index.css'; // добавьте импорт главного файла стилей
+import './index.css'; // добавьте импорт главного файла стилей
 import {
   initialCards,
-  cardTemplate,
-  popupOpenedClass,
   settings,
-  elements,
-  popupSelectorAll,
-  popupElementEditBio,
+  elementsSelector,
+  popupElementNameSelector,
+  popupElementPicSelector,
   popupName,
   popupWork,
   formSaveName,
   profileName,
   profileWork,
-  popupElementEditPic,
-  popupPicName,
-  popupPicUrl,
   formSavePic,
   profileEdit,
   photoAdd,
@@ -22,11 +17,11 @@ import {
 
 import Section from "../components/Section.js";
 import Card from "../components/Сard.js";
-import Popup from "../components/Popup.js";
 import UserInfo from "../components/UserInfo.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import FormValidator from "../components/FormValidator.js";
 import PopupWithImage from "../components/PopupWithImage.js";
+import Popup from "../components/Popup.js";
 
 
 
@@ -38,31 +33,26 @@ const cardElements = new Section(
       const newCard = new Card({
         picName: item.name,
         picURL: item.link,
-        handleCardClick: (picName, picUrl, popupElement) => {
-          const cardClick = new PopupWithImage(popupElement);
+        handleCardClick: (picName, picUrl, popupBigPictureSelector) => {
+          const cardClick = new PopupWithImage(popupBigPictureSelector);
           cardClick.open(picName, picUrl);
+          const cardClose = new Popup(popupBigPictureSelector);
+          cardClose.setEventListeners();
         }
       });
       const cardElement = newCard.generateCard();
       cardElements.addItem(cardElement)
     }
   },
-  elements
+  elementsSelector
 );
 
 //генерации карточки и прослушки событий
 cardElements.generateCards();
-// функция закрытия попапа по нажатию на оверлей и крестик
-popupSelectorAll.forEach((popup) => {  //прохожу по всем найденным попапам
-  popup.addEventListener('mousedown', (evt) => {  //вешаю прослушивание нажатия мыши на эти попапы
-    const popupClass = new  Popup (popup);  //закрываю попап
-    popupClass.setEventListeners()
-  });
-});
+
 
 // открытие и закрытие формы Name
-// const popupNameClass = new Popup(popupElementEditBio);
-const popupNameClass = new PopupWithForm ({renderer: (data) => {handleSaveName (data)}}, popupElementEditBio);
+const popupNameClass = new PopupWithForm ({renderer: (data) => {handleSaveName (data)}}, popupElementNameSelector);
 //функция открытия
 function handleOpenPopupName() {
   const userInfoClass = new UserInfo(profileName, profileWork, {popupName, popupWork});
@@ -81,7 +71,7 @@ function handleSaveName (data) {
 
 // открытие и закрытие формы Pic
 // константа сласса реализации добавления новой карточки
-const addNewCardClass = new PopupWithForm ({renderer: (data) => {handleSavePic(data)}}, popupElementEditPic);
+const addNewCardClass = new PopupWithForm ({renderer: (data) => {handleSavePic(data)}}, popupElementPicSelector);
 //функция открытия
 function handleOpenPopupPic() {
   addNewCardClass.open();

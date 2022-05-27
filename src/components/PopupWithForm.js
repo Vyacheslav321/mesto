@@ -5,15 +5,11 @@ export default class PopupWithForm extends Popup {
   constructor ({renderer}, popupElement) {
     super(popupElement),
     this._renderer = renderer,
-    this._popupElement = popupElement,
+    this._popupElement = document.querySelector(popupElement),
     this._currentForm = this._popupElement.querySelector(settings.formSelector),
     this._inputList = this._popupElement.querySelectorAll(settings.inputSelector),
     this._submitButton = this._popupElement.querySelector(settings.submitButtonSelector),
     this._getInputValues = this._getInputValues.bind(this)
-  };
-
-  open() {  //здесь вставлять в попап картинку с src изображения и подписью к картинке
-    super.open()
   };
 
   _getInputValues() { //собирает данные всех полей формы

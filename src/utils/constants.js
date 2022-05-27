@@ -29,6 +29,10 @@ export const initialCards = [
 //селекторы и классы
 export const cardTemplate = "#card-template";
 export const popupOpenedClass = "popup_opened";
+export const elementsSelector = ".elements";
+export const popupElementNameSelector = ".popup_type_edit-bio";
+export const popupElementPicSelector = ".popup_type_edit-pic";
+export const popupBigPictureSelector = ".popup_type_bigpicture";
 export const settings = {
   formSelector: ".popup__form",
   inputSelector: ".popup__input",
@@ -60,11 +64,11 @@ export const popupPicUrl = popupElementEditPic.querySelector(
 );
 export const formSavePic = popupElementEditPic.querySelector(".popup__form"); //фома добавления карточки (pic)
 //обьявляю попап фото
-export const popupBigPicture = document.querySelector(".popup_type_bigpicture");
+export const popupBigPicture = document.querySelector(".popup_type_bigpicture");//
 //поля вывода просмотра фото
-export const pictureImg = popupBigPicture.querySelector(".popup__picture");
-export const pictureText = popupBigPicture.querySelector(".popup__text");
+export const pictureImg = popupBigPicture.querySelector(".popup__picture");//
+export const pictureText = popupBigPicture.querySelector(".popup__text");//
 
 //кнопки открытия форм
-export const profileEdit = document.querySelector(".profile__button-edit");
-export const photoAdd = document.querySelector(".profile__button-add");
+export const profileEdit = document.querySelector(".profile__button-edit");//
+export const photoAdd = document.querySelector(".profile__button-add");//

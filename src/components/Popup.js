@@ -1,10 +1,10 @@
 //отвечает за открытие и закрытие попапа
 export default class Popup {
   constructor(popupElement) {
-    (this.popupElement = popupElement),
-      //фиксирую функцию _handleEscClose для обработки
-      // в addEventListener и removeEventListener
-      (this._handleEscClose = this._handleEscClose.bind(this));
+    this.popupElement = document.querySelector(popupElement),
+    //фиксирую функцию _handleEscClose для обработки
+    // в addEventListener и removeEventListener
+    this._handleEscClose = this._handleEscClose.bind(this)
   }
 
   open() {

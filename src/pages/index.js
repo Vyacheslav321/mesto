@@ -24,7 +24,8 @@ import PopupWithImage from "../components/PopupWithImage.js";
 
 
 //функция сборки карточки и добавления ее в DOM
-function handleGenerateCard({picName, picURL}) {
+// function handleGenerateCard({picName, picURL}) {
+const handleGenerateCard = ({picName, picURL}) => {
     const newCard = new Card(
     {
       picName,
@@ -37,8 +38,9 @@ function handleGenerateCard({picName, picURL}) {
     }
   );
   const cardElement = newCard.generateCard();
-  cardElements.addItem(cardElement);
-  return cardElements
+  return cardElement
+  // cardElements.addItem(cardElement);
+  // return cardElements
 };
 
 
@@ -48,7 +50,8 @@ const cardElements = new Section(
   {
     items: initialCards,
     renderer: (item) => {
-      handleGenerateCard({picName: item.name, picURL: item.link});
+      const cardElement = handleGenerateCard({picName: item.name, picURL: item.link});
+      cardElements.addItem(cardElement);
     }
   },
   elementsSelector
@@ -89,7 +92,8 @@ function handleOpenPopupPic() {
 //функция закрытия
 function handleSavePic(data) {
   const {picName, picURL} = data;
-  handleGenerateCard({picName, picURL})
+  const cardElement = handleGenerateCard({picName, picURL});
+  cardElements.addItem(cardElement);
   addNewCardClass.close();
   formValidationPic.resetValidator();
 };

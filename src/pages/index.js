@@ -13,6 +13,7 @@ import {
   formSavePic,
   profileEdit,
   photoAdd,
+  popupBigPictureSelector,
 } from "../utils/constants.js";
 
 import Section from "../components/Section.js";
@@ -24,14 +25,14 @@ import PopupWithImage from "../components/PopupWithImage.js";
 
 
 //функция сборки карточки и добавления ее в DOM
+const cardClick = new PopupWithImage(popupBigPictureSelector);
 // function handleGenerateCard({picName, picURL}) {
 const handleGenerateCard = ({picName, picURL}) => {
-    const newCard = new Card(
+  const newCard = new Card(
     {
       picName,
       picURL,
-      handleCardClick: (picName, picURL, popupBigPictureSelector) => {
-        const cardClick = new PopupWithImage(popupBigPictureSelector);
+      handleCardClick: (picName, picURL) => {
         cardClick.open(picName, picURL);
         cardClick.setEventListeners();
       }

@@ -1,11 +1,7 @@
-import { popupBigPictureSelector } from '../utils/constants.js';
-// import PopupWithImage from './PopupWithImage.js';
-
 export default class Card {
   constructor({picName, picURL, handleCardClick}) {
       this._picName = picName,
       this._picUrl = picURL,
-      this.popupBigPictureSelector = popupBigPictureSelector,
       this._handleCardClick = handleCardClick
   }
 
@@ -16,7 +12,7 @@ export default class Card {
 
   _setEventListeners() {
     this._elementPic.addEventListener('click', () => {
-      this._handleCardClick(this._picName, this._picUrl, this.popupBigPictureSelector);
+      this._handleCardClick(this._picName, this._picUrl);
     });
     this._element.querySelector('.element__trash').addEventListener('click', () => {
       this._handleDeleteClick();

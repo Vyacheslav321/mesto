@@ -25,7 +25,7 @@ import PopupWithImage from "../components/PopupWithImage.js";
 
 
 //функция сборки карточки и добавления ее в DOM
-const cardClick = new PopupWithImage(popupBigPictureSelector);
+const bigImage = new PopupWithImage(popupBigPictureSelector);
 // function handleGenerateCard({picName, picURL}) {
 const handleGenerateCard = ({picName, picURL}) => {
   const newCard = new Card(
@@ -33,8 +33,8 @@ const handleGenerateCard = ({picName, picURL}) => {
       picName,
       picURL,
       handleCardClick: (picName, picURL) => {
-        cardClick.open(picName, picURL);
-        cardClick.setEventListeners();
+        bigImage.open(picName, picURL);
+        bigImage.setEventListeners();
       }
     }
   );

@@ -83,7 +83,7 @@
       <button class="popup__close-button popup__close-button_type_delete" type="button" aria-label="Закрыть"></button>
       <form class="popup__form" name="delete" novalidate>
         <h3 class="popup__header popup__header_type_confirm">Вы уверены?</h3>
-        <button class="popup__confirm-button" type="submit" aria-label="Удалить">Да</button>
+        <button class="popup__save-button" type="submit" aria-label="Удалить">Да</button>
       </form>
     </div>
   </section>
@@ -95,7 +95,7 @@
       <h3 class="popup__header popup__header_type_input">Обновить аватар</h3>
       <div class="popup__block">
         <input id="avatar" class="popup__input popup__input_type_avatar" type="url" name="avatarURL"  placeholder="Ссылка на аватар" required>
-        <span id="avatarURL-error" class="error"></span>
+        <span id="avatar-error" class="error"></span>
       </div>
       <button class="popup__save-button" type="submit" aria-label="Создать">Сохранить</button>
     </form>
@@ -109,7 +109,7 @@
       <div class="element__description">
         <h2 class="element__text"></h2>
         <div class="element__like-wrapper">
-          <button class="element__like"></button>
+          <button class="element__like "></button>
           <p class="element__like-counter">0</p>
         </div>
       </div>

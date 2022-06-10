@@ -1,0 +1,151 @@
+export default class Api {
+  constructor({ defaultUrl, headers }) {
+    (this._defaultUrl = defaultUrl), (this._headers = headers);
+  }
+
+  _checkResOk(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+  }
+
+  //Получение информаци о карточках и пользователе
+  getCards() {
+    return fetch(`${this._defaultUrl}cards`, {
+      method: "GET",
+      headers: this._headers,
+    })
+      .then(this._checkResOk)
+      .then((defaultCards) => {
+        console.log(defaultCards);
+        return defaultCards;
+      });
+  }
+
+  getUserInfo() {
+    return fetch(`${this._defaultUrl}users/me`, {
+      method: "GET",
+      headers: this._headers,
+    })
+      .then(this._checkResOk)
+      .then((defaultUsers) => {
+        console.log(defaultUsers);
+        return defaultUsers;
+      });
+  }
+
+  //ЛАЙКИ
+  setLike(id) {
+    const res = await fetch(`${this._defaultUrl}cards/${id}/likes`, {
+      method: "PUT",
+      headers: this._headers,
+    });
+    const data = await this._checkResOk(res);
+    console.log('PUT');
+    return data;
+  }
+
+  setDislike(id) {
+    const res = await fetch(`${this._defaultUrl}cards/${id}/likes`, {
+      method: "DELETE",
+      headers: this._headers,
+    });
+    const data = await this._checkResOk(res);
+    console.log('DELETE');
+    return data;
+  }
+
+  //  Добавление/Удаление карточки пользователя
+  createUserCard(cardItem) {
+    return fetch(`${this._url}/cards`, {
+      method: "POST",
+      headers: this._headers,
+      body: JSON.stringify({
+        name: cardItem.name,
+        link: cardItem.link,
+      }),
+    })
+      .then(this._checkResOk)
+      .then((data) => {
+        return data;
+      });
+  }
+
+  deleteUserCard(idCard) {
+    return fetch(`${this._defaultUrl}cards/${idCard}`, {
+      method: "DELETE",
+      headers: this._headers,
+    })
+      .then(this._checkResOk)
+      .then((data) => {
+        console.log(data);
+        return data;
+      });
+  }
+  // Редактирование инфо о пользователе
+  editUserInfo(userData) {
+    return fetch(`${this._url}users/me`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({
+        name: userData.name,
+        about: userData.about,
+      }),
+    })
+      .then(this._checkResOk)
+      .then((data) => {
+        return data;
+      });
+  }
+  // Редактирование аватара пользователя
+  editAvatar(userData) {
+    return fetch(`${this._url}users/me/avatar`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar: userData.avatar,
+      }),
+    })
+      .then(this._checkResOk)
+      .then((data) => {
+        console.log(data);
+        return data;
+      });
+  }
+}
+
+// https://mesto.nomoreparties.co/v1/cohort-42/cards
+// fetch(`https://mesto.nomoreparties.co/v1/cohort-42/cards`, {
+// fetch(`https://mesto.nomoreparties.co/v1/cohort-42/users/me`, {
+//     method: 'GET',
+//     headers: {authorization: 'a60c123e-be9f-453f-be98-1b1679621350', 'Content-Type': 'application/json'}
+// })
+// .then((res) => {
+//   if (res.ok) {
+//     return res.json();
+//   }
+//   return Promise.reject(`Ошибка: ${res.status}`)
+// })
+// .then((data) => {
+//   console.log(data);
+// })
+// .catch ((err) => {
+//   console.log(`ошибка: ${err}`);
+// })
+// fetch(`https://mesto.nomoreparties.co/v1/cohort-42/cards/______ID________/likes`, {
+//     method: 'PUT',
+//     headers: {authorization: 'a60c123e-be9f-453f-be98-1b1679621350', 'Content-Type': 'application/json'}
+// })
+// .then((res) => {
+//   if (res.ok) {
+//     return res.json();
+//   }
+//   return Promise.reject(`ООшибка: ${res.status}`)
+// })
+// .then((data) => {
+//   console.log(data);
+// })
+// .catch ((err) => {
+//   console.log(`ошибкАА: ${err}`);
+// })

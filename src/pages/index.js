@@ -1,6 +1,6 @@
 import './index.css'; // добавьте импорт главного файла стилей
 import {
-  initialCards,
+  // initialCards,
   settings,
   elementsSelector,
   popupElementNameSelector,
@@ -8,56 +8,135 @@ import {
   popupName,
   popupWork,
   formSaveName,
-  profileName,
-  profileWork,
   formSavePic,
   profileEdit,
   photoAdd,
   popupBigPictureSelector,
+  profileAvatar,
+  formSaveAvatar,
+  popupElementAvatarSelector,
+  profileSelectors,
+  popupElementDelete,
 } from "../utils/constants.js";
 
+import Api from "../components/Api.js";
 import Section from "../components/Section.js";
-import Card from "../components/Сard.js";
+import Card from "../components/Card.js";
 import UserInfo from "../components/UserInfo.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import FormValidator from "../components/FormValidator.js";
 import PopupWithImage from "../components/PopupWithImage.js";
+import PopupWithDelete from '../components/PopupWithDelete';
 
-
-//функция сборки карточки и добавления ее в DOM
+//КОНСТАНТЫ КЛАССОВ
+//
+const userInfoClass =  new UserInfo(profileSelectors);
+//просмотра изображения
 const bigImage = new PopupWithImage(popupBigPictureSelector);
-// function handleGenerateCard({picName, picURL}) {
-const handleGenerateCard = ({picName, picURL}) => {
+//запрос карточек с сервера
+const apiClass = new Api({
+  defaultUrl: 'https://mesto.nomoreparties.co/v1/cohort-42/',
+  headers: {authorization: 'a60c123e-be9f-453f-be98-1b1679621350', 'Content-Type': 'application/json'}
+});
+
+
+//функция(колбэк) добавления лайка на сервере
+function like(idCard, likeCard) {
+  return apiClass.setLike(idCard)
+  .then((data) => {
+    likeCard(data.likes);
+  })
+  .catch((err) => {
+    console.log(`like ошибка: ${err}`)
+  })
+};
+
+//функция(колбэк) удаления лайка на сервере
+function dislike(idCard, likeCard) {
+  return apiClass.setDislike(idCard)
+  .then((data) => {
+    likeCard(data.likes);
+  })
+  .catch((err) => {
+    console.log(`disLike ошибка: ${err}`)
+  })
+};
+
+//удаления карточки
+const popupDeleteClass = new PopupWithDelete({deleteCard}, settings, popupElementDelete);
+//функция(колбэк) удаления лайка на сервере
+function deleteCard(idCard) {
+  popupDeleteClass.renderLoadingDelete(true);
+  apiClass.deleteUserCard(idCard)
+  .then(() => {
+    const cardItem = popupDeleteClass.getCard();
+    cardItem.deleteCard();
+    popupDeleteClass.close();
+  })
+  .catch((err) => {
+    console.log(`ошибка удаления карточки ${err}`);
+  })
+  .finally(() => {
+    popupDeleteClass.renderLoadingDelete(false);
+  })
+}
+
+//
+function deletePopup(cardItem) {
+  popupDeleteClass.setCard(cardItem);
+  popupDeleteClass.open();
+};
+
+
+//функция(колбэк) сборки карточки
+// const handleGenerateCard = ({picName, picURL}) => {
+const handleGenerateCard = (item, defaultUsers) => {
+  const myId = defaultUsers._id
   const newCard = new Card(
     {
-      picName,
-      picURL,
+      item,
+      myId,
+      like: like,
+      dislike: dislike,
       handleCardClick: (picName, picURL) => {
         bigImage.open(picName, picURL);
         bigImage.setEventListeners();
-      }
+      },
+      deleteCardClick: deletePopup
     }
   );
   const cardElement = newCard.generateCard();
   return cardElement
-  // cardElements.addItem(cardElement);
-  // return cardElements
 };
 
 
+
 // реализациия карточки в DOM
-//генерации карточки и прослушки событий
-const cardElements = new Section(
-  {
-    items: initialCards,
-    renderer: (item) => {
-      const cardElement = handleGenerateCard({picName: item.name, picURL: item.link});
-      cardElements.addItem(cardElement);
-    }
-  },
-  elementsSelector
-);
-cardElements.generateCards();
+Promise.all([apiClass.getUserInfo(), apiClass.getCards()])
+  .then(([defaultUsers, defaultCards]) => {
+    userInfoClass.setUserInfo(defaultUsers);
+    //генерации карточки и прослушки событий
+    const cardElements = new Section(
+      {
+        items: defaultCards,
+        renderer: (item) => {
+          const cardElement = handleGenerateCard(item, defaultUsers);
+          cardElements.addItem(cardElement);
+        }
+      },
+      elementsSelector
+    );
+    cardElements.generateCards();
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+
+  //добавление аватара на страницу
+const addAvatar = (avatarURL) => {
+  addNewAvatarClass.setEventListeners();
+}
 
 
 // открытие и закрытие формы Name
@@ -68,7 +147,7 @@ const popupNameClass = new PopupWithForm (
 );
 //функция открытия
 function handleOpenPopupName() {
-  const userInfoClass = new UserInfo(profileName, profileWork, {popupName, popupWork});
+  // const userInfoClass = new UserInfo(profileSelectors);
   //получаю значения полей попапа со страницы
   userInfoClass.getUserInfo();
   popupNameClass.open(); //открываю попап
@@ -76,8 +155,8 @@ function handleOpenPopupName() {
 //функция закрытия
 function handleSaveName (data) {
     const {popupName, popupWork} = data;
-    const userInfo =  new UserInfo(profileName, profileWork, {popupName, popupWork});
-    userInfo.setUserInfo();
+    // const userInfo =  new UserInfo(profileSelectors);
+    userInfoClass.setUserInfo({popupName, popupWork});
     popupNameClass.close();
     formValidationName.resetValidator();
 };
@@ -100,16 +179,36 @@ function handleSavePic(data) {
 };
 
 
+//открытие и закрытие редактирования аватара
+const addNewAvatarClass = new PopupWithForm({renderer: (data) => {handleSaveAvatar(data)}}, popupElementAvatarSelector);
+//открытие попапа
+function handleOpenPopupAvatar() {
+  addNewAvatarClass.open();
+};
+//закрытие попапа
+function handleSaveAvatar(data) {
+  const {avatarURL} = data;
+  addAvatar({avatarURL});
+  addNewAvatarClass.close();
+  formValidationAvatar.resetValidator();
+};
+
+
 //запускаю проверки форм ввода
 const formValidationName = new FormValidator(settings, formSaveName); //для формы Name
 formValidationName.enableValidation();
 const formValidationPic = new FormValidator(settings, formSavePic); //длля формы Pic
 formValidationPic.enableValidation();
+const formValidationAvatar = new FormValidator(settings, formSaveAvatar); //длля формы Avatar
+formValidationAvatar.enableValidation();
 
 
 //слушаю клики по кнопкам открыть окно
 profileEdit.addEventListener("click", handleOpenPopupName); //для формы Name
 photoAdd.addEventListener("click", handleOpenPopupPic); //для формы Pic
+profileAvatar.addEventListener("click", handleOpenPopupAvatar); //для формы  Avatar
 //слушаю клики на кнопку закрытия и сохранения
 popupNameClass.setEventListeners();
 addNewCardClass.setEventListeners();
+addNewAvatarClass.setEventListeners();
+popupDeleteClass.setEventListeners();

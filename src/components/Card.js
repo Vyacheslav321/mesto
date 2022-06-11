@@ -21,31 +21,34 @@ export default class Card {
   }
 
   _deleteButton() {
-    if (this._myId === this._ownerId) {
+    if (this._myId !== this._ownerId) {
       this._elementTrash.style.display = 'none';
     }
   }
 
-  _checkId(id) {
-    this._likes.find((item) => {
-      return id === item.id
-    })
+  _checkId() {
+    const isLikeUser = this._likes.find(user => user._id === this._myId)
+    return isLikeUser
   }
 
   _handleLikeCard() {
-    if (this._checkId(this._myId)) {  //если мой ID есть в лайках
-      this._likeCounter.textContent = this._likes.lenght;
+    if (this._checkId()) {  //если мой ID есть в лайках
+      console.log('yesyes')
+      this._likeCounter.textContent = this._likes.length;
       this._elementLike.classList.add("element__like_active");
     } else {
-      this._likeCounter.textContent = this._likes.lenght;
+      console.log('nonono')
+      this._likeCounter.textContent = this._likes.length;
       this._elementLike.classList.remove("element__like_active");
     }
   }
 
   _toggleLikeButton() {
-    if(this._checkId(this._myId)) {  //если мой ID есть в лайках
+    if (this._checkId()) {  //если мой ID есть в лайках
+      console.log('yesyes2')
       this._dislike(this._id, this._handleLikeClick);
     } else {
+      console.log('nonono2')
       this._like(this._id, this._handleLikeClick);
     }
   };
@@ -81,7 +84,7 @@ export default class Card {
     this._elementPic.src = this._picUrl;
     this._elementPic.alt = this._picName;
     this._element.querySelector(".element__text").textContent = this._picName;
-    // console.log(this._id, this._ownerId, this._myId);
+    // console.log(this._likeCounter);
     return this._element;
   }
 

@@ -37,28 +37,32 @@ export default class Api {
 
   //ЛАЙКИ
   setLike(id) {
-    const res = await fetch(`${this._defaultUrl}cards/${id}/likes`, {
+    return fetch(`${this._defaultUrl}cards/${id}/likes`, {
       method: "PUT",
       headers: this._headers,
-    });
-    const data = await this._checkResOk(res);
-    console.log('PUT');
-    return data;
+    })
+    .then(this._checkResOk)
+    .then((data) =>{
+      console.log('PUT');
+      return data;
+    })
   }
 
   setDislike(id) {
-    const res = await fetch(`${this._defaultUrl}cards/${id}/likes`, {
+    return fetch(`${this._defaultUrl}cards/${id}/likes`, {
       method: "DELETE",
       headers: this._headers,
-    });
-    const data = await this._checkResOk(res);
-    console.log('DELETE');
-    return data;
+    })
+    .then(this._checkResOk)
+    .then((data) =>{
+      console.log('DELETE');
+      return data;
+    })
   }
 
   //  Добавление/Удаление карточки пользователя
   createUserCard(cardItem) {
-    return fetch(`${this._url}/cards`, {
+    return fetch(`${this._defaultUrl}cards`, {
       method: "POST",
       headers: this._headers,
       body: JSON.stringify({
@@ -85,12 +89,12 @@ export default class Api {
   }
   // Редактирование инфо о пользователе
   editUserInfo(userData) {
-    return fetch(`${this._url}users/me`, {
+    return fetch(`${this._defaultUrl}users/me`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
-        name: userData.name,
-        about: userData.about,
+        name: userData.popupName,
+        about: userData.popupWork,
       }),
     })
       .then(this._checkResOk)
@@ -100,11 +104,12 @@ export default class Api {
   }
   // Редактирование аватара пользователя
   editAvatar(userData) {
-    return fetch(`${this._url}users/me/avatar`, {
+    console.log(userData)
+    return fetch(`${this._defaultUrl}users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
-        avatar: userData.avatar,
+        avatar: userData.avatarURL,
       }),
     })
       .then(this._checkResOk)
@@ -114,38 +119,3 @@ export default class Api {
       });
   }
 }
-
-// https://mesto.nomoreparties.co/v1/cohort-42/cards
-// fetch(`https://mesto.nomoreparties.co/v1/cohort-42/cards`, {
-// fetch(`https://mesto.nomoreparties.co/v1/cohort-42/users/me`, {
-//     method: 'GET',
-//     headers: {authorization: 'a60c123e-be9f-453f-be98-1b1679621350', 'Content-Type': 'application/json'}
-// })
-// .then((res) => {
-//   if (res.ok) {
-//     return res.json();
-//   }
-//   return Promise.reject(`Ошибка: ${res.status}`)
-// })
-// .then((data) => {
-//   console.log(data);
-// })
-// .catch ((err) => {
-//   console.log(`ошибка: ${err}`);
-// })
-// fetch(`https://mesto.nomoreparties.co/v1/cohort-42/cards/______ID________/likes`, {
-//     method: 'PUT',
-//     headers: {authorization: 'a60c123e-be9f-453f-be98-1b1679621350', 'Content-Type': 'application/json'}
-// })
-// .then((res) => {
-//   if (res.ok) {
-//     return res.json();
-//   }
-//   return Promise.reject(`ООшибка: ${res.status}`)
-// })
-// .then((data) => {
-//   console.log(data);
-// })
-// .catch ((err) => {
-//   console.log(`ошибкАА: ${err}`);
-// })

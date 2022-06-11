@@ -5,8 +5,6 @@ import {
   elementsSelector,
   popupElementNameSelector,
   popupElementPicSelector,
-  popupName,
-  popupWork,
   formSaveName,
   formSavePic,
   profileEdit,
@@ -17,6 +15,10 @@ import {
   popupElementAvatarSelector,
   profileSelectors,
   popupElementDelete,
+  popupName,
+  popupWork,
+  popupAvatar,
+  popupInputSelectors,
 } from "../utils/constants.js";
 
 import Api from "../components/Api.js";
@@ -44,6 +46,7 @@ const apiClass = new Api({
 function like(idCard, likeCard) {
   return apiClass.setLike(idCard)
   .then((data) => {
+    console.log(data.likes);
     likeCard(data.likes);
   })
   .catch((err) => {
@@ -55,6 +58,7 @@ function like(idCard, likeCard) {
 function dislike(idCard, likeCard) {
   return apiClass.setDislike(idCard)
   .then((data) => {
+    console.log(data.likes)
     likeCard(data.likes);
   })
   .catch((err) => {
@@ -93,8 +97,7 @@ function deletePopup(cardItem) {
 const handleGenerateCard = (item, defaultUsers) => {
   const myId = defaultUsers._id
   const newCard = new Card(
-    {
-      item,
+    { item,
       myId,
       like: like,
       dislike: dislike,
@@ -133,38 +136,76 @@ Promise.all([apiClass.getUserInfo(), apiClass.getCards()])
   });
 
 
-  //добавление аватара на страницу
-const addAvatar = (avatarURL) => {
-  addNewAvatarClass.setEventListeners();
-}
-
-
 // открытие и закрытие формы Name
-// константа сласса реализации изменения карточки
+// константа сласса реализации
 const popupNameClass = new PopupWithForm (
   {renderer: (data) => {handleSaveName (data)}},
-  popupElementNameSelector
+  popupElementNameSelector,
+  popupInputSelectors
 );
 //функция открытия
 function handleOpenPopupName() {
-  // const userInfoClass = new UserInfo(profileSelectors);
-  //получаю значения полей попапа со страницы
-  userInfoClass.getUserInfo();
+  const userData = userInfoClass.getUserInfo(); //получаю значения полей попапа со страницы
+  popupNameClass.setInputValues(userData);  //передаю значения о пользователе в попап
   popupNameClass.open(); //открываю попап
 }
-//функция закрытия
+//функция (колбэк) закрытия
 function handleSaveName (data) {
-    const {popupName, popupWork} = data;
-    // const userInfo =  new UserInfo(profileSelectors);
-    userInfoClass.setUserInfo({popupName, popupWork});
+  popupNameClass.processLoading(true);
+  apiClass.editUserInfo(data)
+  .then((data) => {
+    userInfoClass.setUserInfo(data);
     popupNameClass.close();
     formValidationName.resetValidator();
+  })
+  .catch((err) => {
+    console.log(`Ошибка изменения данных пользователя: ${err}`)
+  })
+  .finally(() => {
+    popupNameClass.processLoading(false);
+  })
 };
+
+
+//открытие и закрытие формы редактирования аватара
+// константа сласса реализации
+const addNewAvatarClass = new PopupWithForm(
+  {renderer: (data) => {handleSaveAvatar(data)}},
+  popupElementAvatarSelector,
+  popupInputSelectors
+);
+//открытие попапа
+function handleOpenPopupAvatar() {
+  addNewAvatarClass.open(); //открываю попап
+  formValidationAvatar.resetValidator();
+};
+//закрытие попапа
+function handleSaveAvatar(data) {
+  addNewAvatarClass.processLoading(true);
+  apiClass.editAvatar(data)
+  .then((data) => {
+    userInfoClass.setUserInfo(data);
+    addNewAvatarClass.close();
+    formValidationName.resetValidator();
+  })
+  .catch((err) => {
+    console.log(`Ошибка изменения аватарки: ${err}`)
+  })
+  .finally(() => {
+    addNewAvatarClass.processLoading(false);
+
+  })
+}
+
 
 
 // открытие и закрытие формы Pic
 // константа сласса реализации добавления новой карточки
-const addNewCardClass = new PopupWithForm ({renderer: (data) => {handleSavePic(data)}}, popupElementPicSelector);
+const addNewCardClass = new PopupWithForm (
+  {renderer: (data) => {handleSavePic(data)}},
+  popupElementPicSelector,
+  popupInputSelectors
+);
 //функция открытия
 function handleOpenPopupPic() {
   addNewCardClass.open();
@@ -179,19 +220,6 @@ function handleSavePic(data) {
 };
 
 
-//открытие и закрытие редактирования аватара
-const addNewAvatarClass = new PopupWithForm({renderer: (data) => {handleSaveAvatar(data)}}, popupElementAvatarSelector);
-//открытие попапа
-function handleOpenPopupAvatar() {
-  addNewAvatarClass.open();
-};
-//закрытие попапа
-function handleSaveAvatar(data) {
-  const {avatarURL} = data;
-  addAvatar({avatarURL});
-  addNewAvatarClass.close();
-  formValidationAvatar.resetValidator();
-};
 
 
 //запускаю проверки форм ввода

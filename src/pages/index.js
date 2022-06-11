@@ -46,7 +46,6 @@ const apiClass = new Api({
 function like(idCard, likeCard) {
   return apiClass.setLike(idCard)
   .then((data) => {
-    console.log(data.likes);
     likeCard(data.likes);
   })
   .catch((err) => {
@@ -58,7 +57,6 @@ function like(idCard, likeCard) {
 function dislike(idCard, likeCard) {
   return apiClass.setDislike(idCard)
   .then((data) => {
-    console.log(data.likes)
     likeCard(data.likes);
   })
   .catch((err) => {
@@ -66,36 +64,12 @@ function dislike(idCard, likeCard) {
   })
 };
 
-//удаления карточки
-const popupDeleteClass = new PopupWithDelete({deleteCard}, settings, popupElementDelete);
-//функция(колбэк) удаления лайка на сервере
-function deleteCard(idCard) {
-  popupDeleteClass.renderLoadingDelete(true);
-  apiClass.deleteUserCard(idCard)
-  .then(() => {
-    const cardItem = popupDeleteClass.getCard();
-    cardItem.deleteCard();
-    popupDeleteClass.close();
-  })
-  .catch((err) => {
-    console.log(`ошибка удаления карточки ${err}`);
-  })
-  .finally(() => {
-    popupDeleteClass.renderLoadingDelete(false);
-  })
-}
-
-//
-function deletePopup(cardItem) {
-  popupDeleteClass.setCard(cardItem);
-  popupDeleteClass.open();
-};
 
 
 //функция(колбэк) сборки карточки
 // const handleGenerateCard = ({picName, picURL}) => {
-const handleGenerateCard = (item, defaultUsers) => {
-  const myId = defaultUsers._id
+const handleGenerateCard = (item) => {
+  const myId = userInfoClass.getId();
   const newCard = new Card(
     { item,
       myId,
@@ -120,10 +94,10 @@ Promise.all([apiClass.getUserInfo(), apiClass.getCards()])
     userInfoClass.setUserInfo(defaultUsers);
     //генерации карточки и прослушки событий
     const cardElements = new Section(
+      defaultCards,
       {
-        items: defaultCards,
         renderer: (item) => {
-          const cardElement = handleGenerateCard(item, defaultUsers);
+          const cardElement = handleGenerateCard(item);
           cardElements.addItem(cardElement);
         }
       },
@@ -132,7 +106,7 @@ Promise.all([apiClass.getUserInfo(), apiClass.getCards()])
     cardElements.generateCards();
   })
   .catch((err) => {
-    console.log(err);
+    console.log(`Ошибка загрузки данных ${err}`);
   });
 
 
@@ -212,15 +186,67 @@ function handleOpenPopupPic() {
 };
 //функция закрытия
 function handleSavePic(data) {
-  const {picName, picURL} = data;
-  const cardElement = handleGenerateCard({picName, picURL});
-  cardElements.addItem(cardElement);
-  addNewCardClass.close();
-  formValidationPic.resetValidator();
+  popupNameClass.processLoading(true);
+  apiClass.createUserCard(data)
+  .then((data) => {
+    // const defaultUsers = userInfoClass.getId();
+    console.log(data)
+    //генерации карточки и прослушки событий
+    const cardElements = new Section(
+      data,
+      {renderer: (items) => {
+          const cardElement = handleGenerateCard(items);
+          cardElements.addItem(cardElement);
+
+        }
+      },
+      elementsSelector
+    );
+    // console.log(data)
+    // const {picName, picURL} = data;
+    // const myId = userInfoClass.getId()
+    // const cardElement = handleGenerateCard({picName, picURL}, myId);
+    // cardElements.addItem(cardElement);
+    // cardElements.addItem(data);
+    cardElements.generateCards();
+    addNewCardClass.close();
+    formValidationPic.resetValidator();
+
+  })
+  .catch((err) => {
+    console.log(`Ошибка загрузки ккарточки: ${err}`)
+  })
+  .finally(() => {
+    popupNameClass.processLoading(false);
+  })
 };
 
 
+//удаления карточки
+const popupDeleteClass = new PopupWithDelete({deleteCards}, settings, popupElementDelete);
+//
+function deletePopup(cardItem) {
+  popupDeleteClass.setCard(cardItem);
+  popupDeleteClass.open();
+  console.log(cardItem)
+};
 
+//функция(колбэк) удаления лайка на сервере
+function deleteCards(idCard) {
+  popupDeleteClass.renderLoadingDelete(true);
+  apiClass.deleteUserCard(idCard)
+  .then(() => {
+    const cardItem = popupDeleteClass.getCard();
+    cardItem.deleteCard();
+    popupDeleteClass.close();
+  })
+  .catch((err) => {
+    console.log(`ошибка удаления карточки ${err}`);
+  })
+  .finally(() => {
+    popupDeleteClass.renderLoadingDelete(false);
+  })
+}
 
 //запускаю проверки форм ввода
 const formValidationName = new FormValidator(settings, formSaveName); //для формы Name

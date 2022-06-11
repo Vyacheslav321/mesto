@@ -1,9 +1,9 @@
 import Popup from "./Popup.js";
 
 export default class PopupWithDelete extends Popup {
-  constructor({popupDelete}, settings, popupElement) {
+  constructor({deleteCards}, settings, popupElement) {
     super(popupElement),  //элемент  - попап подтверждения удаления карточки
-    this._popupDelete = popupDelete, //колбэк
+    this._deleteCards = deleteCards, //колбэк
     // this._popupElement = popupElement,
     this._formElement = this._popupElement.querySelector(settings.formSelector),
     this._submitButton = this._popupElement.querySelector(settings.submitButtonSelector),
@@ -22,7 +22,7 @@ export default class PopupWithDelete extends Popup {
     super.setEventListeners();
     this._formElement.addEventListener('submit', (evt) => {
       evt.preventDefault();
-      this._popupDelete(this._dataCard._id);
+      this._deleteCards(this._dataCard._id);
     });
   };
 

@@ -5,9 +5,7 @@ export default class Card {
       this._likes = item.likes,
       this._id = item._id,  //  ID - карточки
       this._ownerId = item.owner._id, //  ID - владелец карточки
-
       this._myId = myId,  //  ID - мой
-
       this._like = like,  //  колбэк лайков
       this._dislike = dislike,  //  колбэк дизлайков
       this._handleCardClick = handleCardClick,  //  колбэк просмотра карточки
@@ -33,11 +31,9 @@ export default class Card {
 
   _handleLikeCard() {
     if (this._checkId()) {  //если мой ID есть в лайках
-      console.log('yesyes')
       this._likeCounter.textContent = this._likes.length;
       this._elementLike.classList.add("element__like_active");
     } else {
-      console.log('nonono')
       this._likeCounter.textContent = this._likes.length;
       this._elementLike.classList.remove("element__like_active");
     }
@@ -45,10 +41,8 @@ export default class Card {
 
   _toggleLikeButton() {
     if (this._checkId()) {  //если мой ID есть в лайках
-      console.log('yesyes2')
       this._dislike(this._id, this._handleLikeClick);
     } else {
-      console.log('nonono2')
       this._like(this._id, this._handleLikeClick);
     }
   };
@@ -73,7 +67,6 @@ export default class Card {
     this._handleLikeCard();
   }
 
-
   generateCard() {
     this._element = this._getTemplate();
     this._elementPic = this._element.querySelector('.element__pic');
@@ -84,7 +77,6 @@ export default class Card {
     this._elementPic.src = this._picUrl;
     this._elementPic.alt = this._picName;
     this._element.querySelector(".element__text").textContent = this._picName;
-    // console.log(this._likeCounter);
     return this._element;
   }
 
@@ -92,15 +84,3 @@ export default class Card {
     this._element.remove();
   }
 };
-
-
-
-  // _handleDeleteClick() {
-  //   this._element.remove();
-  //   this._element = null;  //при удалении карточки очистить ссылку на DOM-элемент
-  // }
-
-
-  // _handleLikeClick() {
-  //   this._elementLike.classList.toggle("element__like_active");
-  // }

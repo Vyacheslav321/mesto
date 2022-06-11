@@ -18,7 +18,6 @@ export default class Api {
     })
       .then(this._checkResOk)
       .then((defaultCards) => {
-        console.log(defaultCards);
         return defaultCards;
       });
   }
@@ -30,7 +29,6 @@ export default class Api {
     })
       .then(this._checkResOk)
       .then((defaultUsers) => {
-        console.log(defaultUsers);
         return defaultUsers;
       });
   }
@@ -43,7 +41,6 @@ export default class Api {
     })
     .then(this._checkResOk)
     .then((data) =>{
-      console.log('PUT');
       return data;
     })
   }
@@ -55,7 +52,6 @@ export default class Api {
     })
     .then(this._checkResOk)
     .then((data) =>{
-      console.log('DELETE');
       return data;
     })
   }
@@ -66,9 +62,9 @@ export default class Api {
       method: "POST",
       headers: this._headers,
       body: JSON.stringify({
-        name: cardItem.name,
-        link: cardItem.link,
-      }),
+        name: cardItem.picName,
+        link: cardItem.picURL,
+      })
     })
       .then(this._checkResOk)
       .then((data) => {
@@ -83,7 +79,6 @@ export default class Api {
     })
       .then(this._checkResOk)
       .then((data) => {
-        console.log(data);
         return data;
       });
   }
@@ -104,7 +99,6 @@ export default class Api {
   }
   // Редактирование аватара пользователя
   editAvatar(userData) {
-    console.log(userData)
     return fetch(`${this._defaultUrl}users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,
@@ -114,7 +108,6 @@ export default class Api {
     })
       .then(this._checkResOk)
       .then((data) => {
-        console.log(data);
         return data;
       });
   }

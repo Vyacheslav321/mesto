@@ -17,9 +17,6 @@ export default class Api {
       headers: this._headers,
     })
       .then(this._checkResOk)
-      .then((defaultCards) => {
-        return defaultCards;
-      });
   }
 
   getUserInfo() {
@@ -28,9 +25,6 @@ export default class Api {
       headers: this._headers,
     })
       .then(this._checkResOk)
-      .then((defaultUsers) => {
-        return defaultUsers;
-      });
   }
 
   //ЛАЙКИ
@@ -40,9 +34,6 @@ export default class Api {
       headers: this._headers,
     })
     .then(this._checkResOk)
-    .then((data) =>{
-      return data;
-    })
   }
 
   setDislike(id) {
@@ -51,9 +42,6 @@ export default class Api {
       headers: this._headers,
     })
     .then(this._checkResOk)
-    .then((data) =>{
-      return data;
-    })
   }
 
   //  Добавление/Удаление карточки пользователя
@@ -67,9 +55,6 @@ export default class Api {
       })
     })
       .then(this._checkResOk)
-      .then((data) => {
-        return data;
-      });
   }
 
   deleteUserCard(idCard) {
@@ -78,9 +63,6 @@ export default class Api {
       headers: this._headers,
     })
       .then(this._checkResOk)
-      .then((data) => {
-        return data;
-      });
   }
   // Редактирование инфо о пользователе
   editUserInfo(userData) {
@@ -88,14 +70,11 @@ export default class Api {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
-        name: userData.popupName,
-        about: userData.popupWork,
+        name: userData.name,
+        about: userData.about,
       }),
     })
       .then(this._checkResOk)
-      .then((data) => {
-        return data;
-      });
   }
   // Редактирование аватара пользователя
   editAvatar(userData) {
@@ -103,12 +82,9 @@ export default class Api {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
-        avatar: userData.avatarURL,
+        avatar: userData.avatar,
       }),
     })
       .then(this._checkResOk)
-      .then((data) => {
-        return data;
-      });
   }
 }

@@ -1,5 +1,4 @@
 import Popup from "./Popup.js";
-
 export default class PopupWithDelete extends Popup {
   constructor({deleteCards}, settings, popupElement) {
     super(popupElement),  //элемент  - попап подтверждения удаления карточки

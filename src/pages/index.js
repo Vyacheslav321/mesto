@@ -63,6 +63,15 @@ function dislike(idCard, likeCard) {
 
 
 
+//
+const sectionClass = new Section(
+  {renderer: (items) => {
+      const cardElement = handleGenerateCard(items);  //  получаю собранный элемент карточки
+      sectionClass.addItem(cardElement);  //  добавляет элемент карточки на страницу
+    }
+  },
+  elementsSelector
+);
 //функция (колбэк) сборки карточки
 const handleGenerateCard = (item) => {
   const userId = userInfoClass.getId(); //  получаю ID пользователя
@@ -81,25 +90,17 @@ const handleGenerateCard = (item) => {
   return cardElement  //  возвращает собранный элемент карточки для добавления
 };
 //функция отрисовки карточки на странице
-const handleSection = (defaultCards) =>
-{const cardElements = new Section(
-  defaultCards,
-  {renderer: (items) => {
-      const cardElement = handleGenerateCard(items);  //  получаю собранный элемент карточки
-      cardElements.addItem(cardElement);  //  добавляет элемент карточки на страницу
-    }
-  },
-  elementsSelector
-);
-return cardElements
-}
+// const handleSection = (defaultCards) =>
+// {sectionClass
+// return cardElements
+// }
 // реализациия карточки в DOM
 Promise.all([apiClass.getUserInfo(), apiClass.getCards()])
   .then(([defaultUsers, defaultCards]) => {
     defaultCards.reverse();
     userInfoClass.setUserInfo(defaultUsers);
-    const cardElements = handleSection(defaultCards);
-    cardElements.generateCards();
+    // const cardElements = handleSection(defaultCards);
+    sectionClass.generateCards(defaultCards);
   })
   .catch((err) => {
     console.log(`Ошибка загрузки данных ${err}`);
@@ -186,8 +187,8 @@ function handleSavePic(data) {
   addNewCardClass.processLoading(true);
   apiClass.createUserCard(data)
   .then((card) => {
-    const cardElements = handleSection([card]);
-    cardElements.generateCards();
+    // const cardElements = handleSection([card]);
+    sectionClass.generateCards([card]);
     addNewCardClass.close();
     formValidationPic.resetValidator();
   })

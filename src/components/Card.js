@@ -1,11 +1,11 @@
 export default class Card {
-  constructor({item, myId, like, dislike, handleCardClick, deleteCardClick}) {
+  constructor({item, userId, like, dislike, handleCardClick, deleteCardClick}) {
       this._picName = item.name,
       this._picUrl = item.link,
       this._likes = item.likes,
       this._id = item._id,  //  ID - карточки
       this._ownerId = item.owner._id, //  ID - владелец карточки
-      this._myId = myId,  //  ID - мой
+      this._userId = userId,  //  ID - мой
       this._like = like,  //  колбэк лайков
       this._dislike = dislike,  //  колбэк дизлайков
       this._handleCardClick = handleCardClick,  //  колбэк просмотра карточки
@@ -19,13 +19,13 @@ export default class Card {
   }
 
   _deleteButton() {
-    if (this._myId !== this._ownerId) {
+    if (this._userId !== this._ownerId) {
       this._elementTrash.style.display = 'none';
     }
   }
 
   _checkId() {
-    const isLikeUser = this._likes.find(user => user._id === this._myId)
+    const isLikeUser = this._likes.find(user => user._id === this._userId)
     return isLikeUser
   }
 

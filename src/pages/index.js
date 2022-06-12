@@ -66,13 +66,12 @@ function dislike(idCard, likeCard) {
 
 
 
-//функция(колбэк) сборки карточки
-// const handleGenerateCard = ({picName, picURL}) => {
+//функция (колбэк) сборки карточки
 const handleGenerateCard = (item) => {
-  const myId = userInfoClass.getId();
+  const userId = userInfoClass.getId(); //  получаю ID пользователя
   const newCard = new Card(
     { item,
-      myId,
+      userId,
       like: like,
       dislike: dislike,
       handleCardClick: (picName, picURL) => {
@@ -82,27 +81,27 @@ const handleGenerateCard = (item) => {
       deleteCardClick: deletePopup
     }
   );
-  const cardElement = newCard.generateCard();
-  return cardElement
+  const cardElement = newCard.generateCard(); //  сборка элемента карточки
+  return cardElement  //  возвращает собранный элемент карточки для добавления
 };
-
-
-
+//функция отрисовки карточки на странице
+const sectionClass = (defaultCards) =>
+{const cardElements = new Section(
+  defaultCards,
+  {renderer: (items) => {
+      const cardElement = handleGenerateCard(items);
+      cardElements.addItem(cardElement);  //  добавляет элемент карточки на страницу
+    }
+  },
+  elementsSelector
+);
+return cardElements
+}
 // реализациия карточки в DOM
 Promise.all([apiClass.getUserInfo(), apiClass.getCards()])
   .then(([defaultUsers, defaultCards]) => {
     userInfoClass.setUserInfo(defaultUsers);
-    //генерации карточки и прослушки событий
-    const cardElements = new Section(
-      defaultCards,
-      {
-        renderer: (item) => {
-          const cardElement = handleGenerateCard(item);
-          cardElements.addItem(cardElement);
-        }
-      },
-      elementsSelector
-    );
+    const cardElements = sectionClass(defaultCards);
     cardElements.generateCards();
   })
   .catch((err) => {
@@ -122,7 +121,7 @@ function handleOpenPopupName() {
   const userData = userInfoClass.getUserInfo(); //получаю значения полей попапа со страницы
   popupNameClass.setInputValues(userData);  //передаю значения о пользователе в попап
   popupNameClass.open(); //открываю попап
-}
+};
 //функция (колбэк) закрытия
 function handleSaveName (data) {
   popupNameClass.processLoading(true);
@@ -153,7 +152,7 @@ function handleOpenPopupAvatar() {
   addNewAvatarClass.open(); //открываю попап
   formValidationAvatar.resetValidator();
 };
-//закрытие попапа
+//закрытие (колбэк) попапа
 function handleSaveAvatar(data) {
   addNewAvatarClass.processLoading(true);
   apiClass.editAvatar(data)
@@ -169,9 +168,7 @@ function handleSaveAvatar(data) {
     addNewAvatarClass.processLoading(false);
 
   })
-}
-
-
+};
 
 // открытие и закрытие формы Pic
 // константа сласса реализации добавления новой карточки
@@ -184,34 +181,15 @@ const addNewCardClass = new PopupWithForm (
 function handleOpenPopupPic() {
   addNewCardClass.open();
 };
-//функция закрытия
+//функция (колбэк) закрытия
 function handleSavePic(data) {
-  popupNameClass.processLoading(true);
+  addNewCardClass.processLoading(true);
   apiClass.createUserCard(data)
-  .then((data) => {
-    // const defaultUsers = userInfoClass.getId();
-    console.log(data)
-    //генерации карточки и прослушки событий
-    const cardElements = new Section(
-      data,
-      {renderer: (items) => {
-          const cardElement = handleGenerateCard(items);
-          cardElements.addItem(cardElement);
-
-        }
-      },
-      elementsSelector
-    );
-    // console.log(data)
-    // const {picName, picURL} = data;
-    // const myId = userInfoClass.getId()
-    // const cardElement = handleGenerateCard({picName, picURL}, myId);
-    // cardElements.addItem(cardElement);
-    // cardElements.addItem(data);
+  .then((card) => {
+    const cardElements = sectionClass([card]);
     cardElements.generateCards();
     addNewCardClass.close();
     formValidationPic.resetValidator();
-
   })
   .catch((err) => {
     console.log(`Ошибка загрузки ккарточки: ${err}`)
@@ -228,9 +206,7 @@ const popupDeleteClass = new PopupWithDelete({deleteCards}, settings, popupEleme
 function deletePopup(cardItem) {
   popupDeleteClass.setCard(cardItem);
   popupDeleteClass.open();
-  console.log(cardItem)
 };
-
 //функция(колбэк) удаления лайка на сервере
 function deleteCards(idCard) {
   popupDeleteClass.renderLoadingDelete(true);

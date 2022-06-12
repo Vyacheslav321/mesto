@@ -10,9 +10,8 @@ export default class Section {
     this._elements.prepend(cardElement);
   }
   generateCards() {
-
     this._cardItems.forEach(items => {
-      console.log(items);
-      this._renderer(items)});
+      this._renderer(items);
+    });
   }
 }

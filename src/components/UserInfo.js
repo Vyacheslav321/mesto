@@ -1,17 +1,25 @@
 //отвечает за управление отображением информации о пользователе на странице
 export default class UserInfo {
-  constructor(profileName, profileWork, {popupName, popupWork}) {
-    this._profileName = profileName,
-    this._profileWork = profileWork,
-    this._popupName = popupName,
-    this._popupWork = popupWork
+  constructor(profileSelectors) {
+    this._profileName = document.querySelector(profileSelectors.name),
+    this._profileWork = document.querySelector(profileSelectors.work),
+    this._profileAvatar = document.querySelector(profileSelectors.avatar),
+    this._id = ''
   };
-  getUserInfo() { //метод пригодится когда данные пользователя нужно будет подставить в форму при открытии
-    this._popupName.value = this._profileName.textContent;
-    this._popupWork.value = this._profileWork.textContent;
+  getUserInfo() {//получаю значения со страницы
+    return {
+      name: this._profileName.textContent,
+      about: this._profileWork.textContent,
+      avatar: this._profileAvatar.src
+    }
   };
-  setUserInfo() {
-    this._profileName.textContent = this._popupName;  //передаю значения полей попапа на страницу
-    this._profileWork.textContent = this._popupWork;  //передаю значения полей попапа на страницу
+  setUserInfo(userData) {
+    this._profileName.textContent = userData.name;  //передаю значения полей попапа на страницу
+    this._profileWork.textContent = userData.about;  //передаю значения полей попапа на страницу
+    this._id = userData._id;
+    this._profileAvatar.src = userData.avatar;
   };
+  getId() {
+    return this._id;
+  }
 };

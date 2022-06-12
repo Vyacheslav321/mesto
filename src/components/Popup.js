@@ -1,7 +1,7 @@
 //отвечает за открытие и закрытие попапа
 export default class Popup {
   constructor(popupElement) {
-    this.popupElement = document.querySelector(popupElement),
+    this._popupElement = document.querySelector(popupElement),
     //фиксирую функцию _handleEscClose для обработки
     // в addEventListener и removeEventListener
     this._handleEscClose = this._handleEscClose.bind(this)
@@ -9,13 +9,13 @@ export default class Popup {
 
   open() {
     //открытие попапа
-    this.popupElement.classList.add("popup_opened");
+    this._popupElement.classList.add("popup_opened");
     document.addEventListener("keyup", this._handleEscClose);
   }
 
   close() {
     //закрытие попапа
-    this.popupElement.classList.remove("popup_opened");
+    this._popupElement.classList.remove("popup_opened");
     document.removeEventListener("keyup", this._handleEscClose);
   }
 
@@ -27,7 +27,7 @@ export default class Popup {
 
   setEventListeners() {
     //слушатель клика по крестику и серой области
-    this.popupElement.addEventListener("mousedown", (evt) => {
+    this._popupElement.addEventListener("mousedown", (evt) => {
       //если элемент, на котором произошло событие
       if (
         //содержит класс popup_opened (пространство вне контейнера попапа)

@@ -15,11 +15,14 @@
   <main>
 <!-- PROFILE -->
     <section class="profile">
-      <img class="profile__avatar" src="<%=require('./images/profile__avatar_image.jpg')%>" alt="аватар">
+      <div class="profile__avatar-block">
+        <img class="profile__avatar" src="#" alt="аватар">
+        <button class="profile__button-avatar" type="button" aria-label="Аватар"></button>
+      </div>
       <div class="profile__info">
-          <h1 class="profile__name">Жак-Ив Кусто</h1>
+          <h1 class="profile__name"></h1>
           <button class="profile__button-edit" type="button" aria-label="Редактировать"></button>
-          <p class="profile__work">Исследователь океана</p>
+          <p class="profile__work"></p>
       </div>
       <button class="profile__button-add" type="button" aria-label="Добавить"></button>
     </section>
@@ -35,7 +38,7 @@
     <div class="popup__container popup__container_type_input">
       <button class="popup__close-button popup__close-button_type_edit-bio" type="button" aria-label="Закрыть"></button>
       <form class="popup__form" name="edit-bio" novalidate>
-        <h3 class="popup__header">Редактировать профиль</h3>
+        <h3 class="popup__header popup__header_type_input">Редактировать профиль</h3>
         <div class="popup__block">
           <input id="popupName" class="popup__input popup__input_type_name" type="text" name="popupName" minlength="2" maxlength="40" required autofocus>
           <span id="popupName-error" class="error"></span>
@@ -53,7 +56,7 @@
       <div class="popup__container popup__container_type_input">
         <button class="popup__close-button popup__close-button_type_edit-pic" type="button" aria-label="Закрыть"></button>
         <form class="popup__form" name="edit-pic" novalidate>
-          <h3 class="popup__header">Новое место</h3>
+          <h3 class="popup__header popup__header_type_input">Новое место</h3>
           <div class="popup__block">
             <input id="picName" class="popup__input popup__input_type_picname" type="text" name="picName" placeholder="Название" minlength="2" maxlength="30" required>
             <span id="picName-error" class="error"></span>
@@ -74,14 +77,41 @@
       <p class="popup__text"></p>
     </div>
   </section>
+<!-- POPUP del photo -->
+  <section class="popup popup_type_delete">   <!-- popup_opened-->
+    <div class="popup__container popup__container_type_input">
+      <button class="popup__close-button popup__close-button_type_delete" type="button" aria-label="Закрыть"></button>
+      <form class="popup__form" name="delete" novalidate>
+        <h3 class="popup__header popup__header_type_confirm">Вы уверены?</h3>
+        <button class="popup__save-button" type="submit" aria-label="Удалить">Да</button>
+      </form>
+    </div>
+  </section>
+<!-- POPUP avatar -->
+<section class="popup popup_type_avatar">
+  <div class="popup__container popup__container_type_input">
+    <button class="popup__close-button popup__close-button_type_avatar" type="button" aria-label="Закрыть"></button>
+    <form class="popup__form" name="avatar" novalidate>
+      <h3 class="popup__header popup__header_type_input">Обновить аватар</h3>
+      <div class="popup__block">
+        <input id="avatar" class="popup__input popup__input_type_avatar" type="url" name="avatarURL"  placeholder="Ссылка на аватар" required>
+        <span id="avatar-error" class="error"></span>
+      </div>
+      <button class="popup__save-button" type="submit" aria-label="Создать">Сохранить</button>
+    </form>
+ </div>
+</section>
 <!-- TEMPLATE -->
   <template id="card-template">
     <div class="element">
-      <img class="element__pic" src="<%=require('./images/elements__like_unactive.svg')%>" alt="Картинка">
+      <img class="element__pic" src="#" alt="Картинка">
       <div class="element__trash"></div>
       <div class="element__description">
         <h2 class="element__text"></h2>
-        <button class="element__like"></button>
+        <div class="element__like-wrapper">
+          <button class="element__like "></button>
+          <p class="element__like-counter"></p>
+        </div>
       </div>
     </div>
   </template>

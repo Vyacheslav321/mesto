@@ -1,6 +1,5 @@
 import './index.css'; // добавьте импорт главного файла стилей
 import {
-  // initialCards,
   settings,
   elementsSelector,
   popupElementNameSelector,
@@ -15,10 +14,8 @@ import {
   popupElementAvatarSelector,
   profileSelectors,
   popupElementDelete,
-  popupName,
-  popupWork,
-  popupAvatar,
   popupInputSelectors,
+  popupPictureSelectors,
 } from "../utils/constants.js";
 
 import Api from "../components/Api.js";
@@ -34,7 +31,7 @@ import PopupWithDelete from '../components/PopupWithDelete';
 //
 const userInfoClass =  new UserInfo(profileSelectors);
 //просмотра изображения
-const bigImage = new PopupWithImage(popupBigPictureSelector);
+const bigImage = new PopupWithImage(popupBigPictureSelector, popupPictureSelectors);
 //запрос карточек с сервера
 const apiClass = new Api({
   defaultUrl: 'https://mesto.nomoreparties.co/v1/cohort-42/',
@@ -76,7 +73,6 @@ const handleGenerateCard = (item) => {
       dislike: dislike,
       handleCardClick: (picName, picURL) => {
         bigImage.open(picName, picURL);
-        bigImage.setEventListeners();
       },
       deleteCardClick: deletePopup
     }
@@ -85,11 +81,11 @@ const handleGenerateCard = (item) => {
   return cardElement  //  возвращает собранный элемент карточки для добавления
 };
 //функция отрисовки карточки на странице
-const sectionClass = (defaultCards) =>
+const handleSection = (defaultCards) =>
 {const cardElements = new Section(
   defaultCards,
   {renderer: (items) => {
-      const cardElement = handleGenerateCard(items);
+      const cardElement = handleGenerateCard(items);  //  получаю собранный элемент карточки
       cardElements.addItem(cardElement);  //  добавляет элемент карточки на страницу
     }
   },
@@ -100,8 +96,9 @@ return cardElements
 // реализациия карточки в DOM
 Promise.all([apiClass.getUserInfo(), apiClass.getCards()])
   .then(([defaultUsers, defaultCards]) => {
+    defaultCards.reverse();
     userInfoClass.setUserInfo(defaultUsers);
-    const cardElements = sectionClass(defaultCards);
+    const cardElements = handleSection(defaultCards);
     cardElements.generateCards();
   })
   .catch((err) => {
@@ -113,6 +110,7 @@ Promise.all([apiClass.getUserInfo(), apiClass.getCards()])
 // константа сласса реализации
 const popupNameClass = new PopupWithForm (
   {renderer: (data) => {handleSaveName (data)}},
+  settings,
   popupElementNameSelector,
   popupInputSelectors
 );
@@ -144,6 +142,7 @@ function handleSaveName (data) {
 // константа сласса реализации
 const addNewAvatarClass = new PopupWithForm(
   {renderer: (data) => {handleSaveAvatar(data)}},
+  settings,
   popupElementAvatarSelector,
   popupInputSelectors
 );
@@ -174,6 +173,7 @@ function handleSaveAvatar(data) {
 // константа сласса реализации добавления новой карточки
 const addNewCardClass = new PopupWithForm (
   {renderer: (data) => {handleSavePic(data)}},
+  settings,
   popupElementPicSelector,
   popupInputSelectors
 );
@@ -186,7 +186,7 @@ function handleSavePic(data) {
   addNewCardClass.processLoading(true);
   apiClass.createUserCard(data)
   .then((card) => {
-    const cardElements = sectionClass([card]);
+    const cardElements = handleSection([card]);
     cardElements.generateCards();
     addNewCardClass.close();
     formValidationPic.resetValidator();
@@ -242,3 +242,4 @@ popupNameClass.setEventListeners();
 addNewCardClass.setEventListeners();
 addNewAvatarClass.setEventListeners();
 popupDeleteClass.setEventListeners();
+bigImage.setEventListeners();

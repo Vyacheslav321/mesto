@@ -1,8 +1,7 @@
 //отвечает за открытие попапа для каждой формы
-import {settings } from "../utils/constants.js";
 import Popup from "./Popup.js";
 export default class PopupWithForm extends Popup {
-  constructor ({renderer}, popupElement, popupInputSelectors) {
+  constructor ({renderer}, settings, popupElement, popupInputSelectors) {
     super(popupElement),
     this._renderer = renderer,
     this._popupElement = document.querySelector(popupElement),
@@ -39,9 +38,10 @@ export default class PopupWithForm extends Popup {
   };
 
 setInputValues(userData) { //передаю значения о пользователе в попап
-  this._popupName.value = userData.name;
-  this._popupWork.value = userData.about;
-  this._popupAvatar.value = userData.avatar;
+  this._inputList.forEach(input => {
+    console.log(input.name);
+    input.value = userData[input.name];
+  })
 };
 
   processLoading(loading) {

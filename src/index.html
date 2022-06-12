@@ -40,11 +40,11 @@
       <form class="popup__form" name="edit-bio" novalidate>
         <h3 class="popup__header popup__header_type_input">Редактировать профиль</h3>
         <div class="popup__block">
-          <input id="popupName" class="popup__input popup__input_type_name" type="text" name="popupName" minlength="2" maxlength="40" required autofocus>
+          <input id="popupName" class="popup__input popup__input_type_name" type="text" name="name" minlength="2" maxlength="40" required autofocus>
           <span id="popupName-error" class="error"></span>
         </div>
         <div class="popup__block">
-          <input id="popupWork" class="popup__input popup__input_type_work" type="text" name="popupWork" minlength="2" maxlength="200" required>
+          <input id="popupWork" class="popup__input popup__input_type_work" type="text" name="about" minlength="2" maxlength="200" required>
           <span id="popupWork-error" class="error"></span>
         </div>
         <button class="popup__save-button" type="submit" aria-label="Сохранить">Сохранить</button>
@@ -94,7 +94,7 @@
     <form class="popup__form" name="avatar" novalidate>
       <h3 class="popup__header popup__header_type_input">Обновить аватар</h3>
       <div class="popup__block">
-        <input id="avatar" class="popup__input popup__input_type_avatar" type="url" name="avatarURL"  placeholder="Ссылка на аватар" required>
+        <input id="avatar" class="popup__input popup__input_type_avatar" type="url" name="avatar"  placeholder="Ссылка на аватар" required>
         <span id="avatar-error" class="error"></span>
       </div>
       <button class="popup__save-button" type="submit" aria-label="Создать">Сохранить</button>

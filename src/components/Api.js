@@ -57,6 +57,11 @@ export default class Api {
       .then(this._checkResOk)
   }
 
+  verifyAdress(data) {
+    return fetch(data.picURL)
+    // .then(this._checkResOk)
+  }
+
   deleteUserCard(idCard) {
     return fetch(`${this._defaultUrl}cards/${idCard}`, {
       method: "DELETE",
@@ -88,3 +93,9 @@ export default class Api {
       .then(this._checkResOk)
   }
 }
+
+
+// body: JSON.stringify({
+//   name: cardItem.picName,
+//   link: cardItem.picURL,
+// })

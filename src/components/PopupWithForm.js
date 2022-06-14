@@ -11,7 +11,8 @@ export default class PopupWithForm extends Popup {
     this._getInputValues = this._getInputValues.bind(this)
     this._popupName = document.querySelector(popupInputSelectors.popupNameSelector),
     this._popupWork = document.querySelector(popupInputSelectors.popupWorkSelector),
-    this._popupAvatar = document.querySelector(popupInputSelectors.popupAvatarSelector)
+    this._popupAvatar = document.querySelector(popupInputSelectors.popupAvatarSelector),
+    this._submitButtonContent = this._submitButton.textContent
   };
 
   _getInputValues() { //собирает данные всех полей формы
@@ -48,7 +49,7 @@ setInputValues(userData) { //передаю значения о пользова
     if (loading) {
       this._submitButton.textContent = 'Сохранение...';
     } else {
-      this._submitButton.textContent = 'Да';
+      this._submitButton.textContent = this._submitButtonContent;
     };
   }
 }

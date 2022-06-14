@@ -183,23 +183,33 @@ function handleOpenPopupPic() {
 };
 //функция (колбэк) закрытия
 function handleSavePic(data) {
-  addNewCardClass.processLoading(true);
-  apiClass.createUserCard(data)
-  .then((card) => {
-    const cardElement = generateCard(card);  //  получаю собранный элемент карточки
-    cardSection.addItem(cardElement);  //  добавляет элемент карточки на страницу
-    // cardSection.generateCards([card]);
-    addNewCardClass.close();
-    formValidationPic.resetValidator();
+  apiClass.verifyAdress(data)
+  .then(verifyData => {
+    if (verifyData.ok) {
+    addNewCardClass.processLoading(true);
+    apiClass.createUserCard(data)
+    .then((card) => {
+      const cardElement = generateCard(card);  //  получаю собранный элемент карточки
+      cardSection.addItem(cardElement);  //  добавляет элемент карточки на страницу
+      // cardSection.generateCards([card]);
+      addNewCardClass.close();
+      formValidationPic.resetValidator();
+    })
+    .catch((err) => {
+      console.log(`Ошибка загрузки ккарточки: ${err}`)
+    })
+    .finally(() => {
+      addNewCardClass.processLoading(false);
+    })
+    } else {
+      return Promise.reject(`Ошибка: ${res.status}`);
+    }
   })
-  .catch((err) => {
-    console.log(`Ошибка загрузки ккарточки: ${err}`)
+  .catch(err => {
+    console.log(`Ошибка ссылки пользователя: ${err}`)
   })
-  .finally(() => {
-    popupNameClass.processLoading(false);
-  })
-};
 
+};
 
 //удаления карточки
 const popupDeleteClass = new PopupWithDelete({deleteCards}, settings, popupElementDelete);

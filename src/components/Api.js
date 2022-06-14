@@ -88,9 +88,3 @@ export default class Api {
       .then(this._checkResOk)
   }
 }
-
-
-// body: JSON.stringify({
-//   name: cardItem.picName,
-//   link: cardItem.picURL,
-// })
